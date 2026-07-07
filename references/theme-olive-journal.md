@@ -85,7 +85,7 @@
         </section>
         <p style="font-size:13px;color:#65675e;margin:0;line-height:1.7;"><span leaf="">{{副标题说明}}</span></p>
       </section>
-      <section style="flex-shrink:0;width:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#eeefe9;border:1px dashed #bfc1b7;border-radius:6px;padding:8px;">
+      <section style="flex-shrink:0;width:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#eeefe9;border:1px dashed #bfc1b7;text-align:center;border-radius:6px;padding:8px;">
         <svg width="72" height="72" viewBox="0 0 64 64" aria-hidden="true" style="display:block;">
           <ellipse cx="32" cy="36" rx="22" ry="18" fill="none" stroke="#4d4f46" stroke-width="2"></ellipse>
           <circle cx="26" cy="30" r="3" fill="#4d4f46"></circle>

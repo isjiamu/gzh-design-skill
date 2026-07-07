@@ -417,10 +417,10 @@
 
 ### 9a. quote-box（灰色虚线引用框）
 
-所有引用、补充说明的**默认组件**（虚线框是本主题的风格特征，仅此组件与 9b 保留 dashed）：
+所有引用、补充说明的**默认组件**（虚线框是本主题的风格特征，仅此组件与 9b 保留）：
 
 ```html
-<section style="background:#F9FAFB;border:1px dashed #D1D5DB;border-radius:8px;padding:12px 16px;margin-bottom:24px;text-align:justify;">
+<section style="background:#F9FAFB;border:1px solid #D1D5DB;border-radius:8px;padding:12px 16px;margin-bottom:24px;text-align:justify;">
   <p style="font-size:13px;color:#374151;margin:0;line-height:1.6;">
     {{引用内容，可嵌入绿色加粗等内联样式}}
   </p>
@@ -434,7 +434,7 @@
 单行版（只有主金句）：
 
 ```html
-<section style="background:#FFF;border:1px dashed #BBF7D0;border-radius:8px;padding:14px 16px;margin-bottom:24px;text-align:center;">
+<section style="background:#FFF;border:1px solid #BBF7D0;border-radius:8px;padding:14px 16px;margin-bottom:24px;text-align:center;">
   <p style="margin:0;line-height:1.6;">
     <span style="font-size:15px;color:#059669;font-weight:bold;border-bottom:3px solid #FDE68A;padding-bottom:2px;"><span leaf="">{{亮点内容}}</span></span>
   </p>
@@ -444,7 +444,7 @@
 带前缀引导语版（两段式）：
 
 ```html
-<section style="background:#FFF;border:1px dashed #BBF7D0;border-radius:8px;padding:14px 16px;margin-bottom:24px;text-align:center;">
+<section style="background:#FFF;border:1px solid #BBF7D0;border-radius:8px;padding:14px 16px;margin-bottom:24px;text-align:center;">
   <p style="font-size:12px;color:#9CA3AF;margin:0 0 6px;line-height:1.5;">
     <span leaf="">{{引导语}}</span>
   </p>
@@ -457,7 +457,7 @@
 带下方补充说明版：
 
 ```html
-<section style="background:#FFF;border:1px dashed #BBF7D0;border-radius:8px;padding:14px 16px;margin-bottom:24px;text-align:center;">
+<section style="background:#FFF;border:1px solid #BBF7D0;border-radius:8px;padding:14px 16px;margin-bottom:24px;text-align:center;">
   <p style="margin:0 0 6px;line-height:1.6;">
     <span style="font-size:15px;color:#059669;font-weight:bold;border-bottom:3px solid #FDE68A;padding-bottom:2px;"><span leaf="">{{高亮内容}}</span></span>
   </p>
