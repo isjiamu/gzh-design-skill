@@ -56,6 +56,13 @@
 - 新主题登记进 theme-index.md 且 `component_lint.py` 0 ERROR 后才算交付；之后"列全部主题让用户选"必须包含它
 - 主题 ID 与已有主题冲突 → 提示换名或确认覆盖，不静默覆盖
 
+## 本地图片图床用例
+
+- Markdown 里有本地路径图 `![](./imgs/x.png)` → 排版前跑 `scripts/upload_image.py` 传图床换公网 URL，再装配；不要把本地路径写进产物
+- 图片是远程 `http(s)` URL → 原样保留，不上传
+- 未配置图床（无密钥）→ 脚本退出码 2；转告用户配置 image-host.md 或手动上传，不静默塞本地路径
+- 同一张图重排多次 → 内容 hash 命名 + 本地缓存，不重复上传、URL 稳定
+
 ## 格式兼容用例
 
 - 给 `.docx` → 先跑 `scripts/extract_docx.py` 转 md，再结构确认，不直接读二进制

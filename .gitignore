@@ -23,3 +23,8 @@ node_modules/
 # 预览图托管在 GitHub Release，不入库
 docs/screenshots/
 *.png
+
+# 图床密钥/缓存（绝不入库）
+image-host.json
+upload-cache.json
+.env
