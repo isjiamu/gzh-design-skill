@@ -488,6 +488,7 @@
 | AI 品牌名（Claude/Obsidian/Gemini 等） | 组件 6e 品牌紫色 | 不与 6a 混用 |
 | 案例/示例小标题 | 组件 7 case-title | case01/02… |
 | `![](图片)` | 组件 8 image-ticket | `src`/`data-src` 原样保留，不改写 |
+| `[text](url)` 超链接 | 通用库 4a 上标角标 + 4b 参考资料列表 | 正文 `text` + `[n]`（套本主题绿色主色 `#059669`），文末 footer-cta 前生成对应参考资料列表 |
 | 章节小结/观点 | 组件 9 conclusion-card | |
 | 特点/步骤/清单 | 组件 10 numbered-feature-list | 每项一张卡片 |
 | 核心金句/关键数据 | 组件 11 key-point-card | 硬阴影锚点层，全文慎用 |
