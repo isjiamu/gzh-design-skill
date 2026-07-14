@@ -1,8 +1,8 @@
-# 全部 6 套主题效果预览 · All 6 Themes
+# 全部 7 套主题效果预览 · All 7 Themes
 
-同一篇长文（《做了些爆款 Skills 以后，我对 Skills 的看法》），用 6 套精选主题各排一遍的真实长图（含配图、引言卡、编号章节、金句、名词旁注等完整组件）。
+同一篇长文（《做了些爆款 Skills 以后，我对 Skills 的看法》），用 7 套精选主题各排一遍（含配图、引言卡、编号章节、金句、名词旁注等完整组件）。
 
-> The same long-form article laid out in all 6 curated themes. Back to [README](../README.md).
+> The same long-form article laid out in all 7 curated themes. Back to [README](../README.md).
 
 <table>
 <tr>
@@ -14,6 +14,11 @@
 <td align="center"><img src="https://github.com/isjiamu/gzh-design-skill/releases/download/assets-v1/lf-zen-whitespace.png?v=1" width="250"><br><sub><b>留白禅意风 Zen Whitespace</b></sub></td>
 <td align="center"><img src="https://github.com/isjiamu/gzh-design-skill/releases/download/assets-v1/lf-moyu-ticket.png?v=1" width="250"><br><sub><b>摸鱼票据风 Moyu Ticket</b></sub></td>
 <td align="center"><img src="https://github.com/isjiamu/gzh-design-skill/releases/download/assets-v1/lf-olive-journal.png?v=1" width="250"><br><sub><b>橄榄手记 Olive Journal</b></sub></td>
+</tr>
+<tr>
+<td align="center"><a href="gallery/tech-cobalt.html"><b>打开完整交互预览</b></a><br><sub><b>科技钴蓝 Tech Cobalt</b></sub></td>
+<td></td>
+<td></td>
 </tr>
 </table>
 
