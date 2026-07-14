@@ -131,7 +131,71 @@ git clone https://github.com/isjiamu/gzh-design-skill.git ~/.claude/skills/gzh-d
 3. **解析 Markdown** — 识别标题、章节、加粗、高亮、引用、图片、代码块、列表。
 4. **装配 HTML** — 用组件库里的真实组件拼装，落实编号、下划线、全角、签名。
 5. **校验** — 跑 `validate_gzh_html.py`，ERROR 清零才交付。
-6. **输出** — 生成干净正文 + 带「复制」按钮的预览页；浏览器打开预览页点右上角「复制到公众号」，再去编辑器粘贴即可（免手动全选）。
+6. **输出** — 两条路线任选其一：
+
+   **路线一 · 手动粘贴**（适合电脑端直接发布）
+   生成预览页 → 浏览器打开 → 点右上角「复制」→ 公众号编辑器粘贴
+
+   **路线二 · API 上传**（适合自动化 / 无头发布）
+   调用 `scripts/wechat_draft.py` 的 `upload_and_cleanup()`，草稿直接推送到公众号草稿箱，全程无需手动操作。
+
+## 🔧 API 上传草稿（路线二）
+
+### 配置
+
+```bash
+# 1. 创建配置文件
+cat > ~/.wechat_config.json << 'EOF'
+{
+  "WECHAT_APP_ID": "wx_your_appid",
+  "WECHAT_APP_SECRET": "your_app_secret"
+}
+EOF
+
+# 2. 可选：自定义路径（默认 ~/.wechat_access_token, ~/.wechat_config.json, ./image_001.jpg）
+export WECHAT_CONFIG_FILE="/path/to/config.json"
+export WECHAT_COVER_PATH="/path/to/cover.jpg"
+```
+
+封面图要求：支持 jpg/png，建议 900×383 像素（2.35:1），文件 ≤64KB（脚本会自动压缩）。
+
+### Python 调用（推荐）
+
+```python
+import sys
+sys.path.insert(0, 'scripts')
+from wechat_draft import upload_and_cleanup
+
+media_id, nbsp = upload_and_cleanup(
+    cover_path='image_001.jpg',
+    title='文章标题',
+    digest='摘要（不超过54字）',
+    html_content=open('article.html').read()
+)
+print(f'草稿 media_id: {media_id}')
+```
+
+### 命令行调用
+
+```bash
+python3 scripts/wechat_draft.py image_001.jpg "标题" "摘要" < article.html
+# 或交互式（留空后回车）
+python3 scripts/wechat_draft.py
+```
+
+### 验证
+
+上传后自动验证，检查三项：
+- `news['title']`：标题无乱码
+- emoji（👉 📦 等）：内容中正确存在
+- `nbsp` 计数：草稿内容中 `&nbsp;` 数量为 0
+
+若 `nbsp > 0`，调用 `cleanup_draft_nbsp()` 补救：
+```python
+from wechat_draft import cleanup_draft_nbsp, get_token
+token = get_token()
+cleanup_draft_nbsp(token, media_id)
+```
 
 ## 🧩 公众号平台限制（已内置兜底）
 
