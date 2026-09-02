@@ -1,0 +1,272 @@
+<section style="max-width:677px;margin:0 auto;background:#0D1117;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#C9D1D9;line-height:1.8;letter-spacing:0.5px;overflow-x:hidden;padding-bottom:40px;">
+
+  <!-- 1. 开头引言卡片（终端窗口风格） -->
+  <section style="margin:16px 10px 32px;border-radius:10px;overflow:hidden;border:1px solid #30363D;box-shadow:0 8px 32px -8px rgba(0,0,0,0.6);">
+    <!-- 终端标题栏 -->
+    <section style="display:flex;align-items:center;background:#161B22;padding:10px 16px;border-bottom:1px solid #30363D;">
+      <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#FF5F56;margin-right:7px;font-size:0;line-height:0;overflow:hidden;">.</span>
+      <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#FFBD2E;margin-right:7px;font-size:0;line-height:0;overflow:hidden;">.</span>
+      <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#27C93F;margin-right:12px;font-size:0;line-height:0;overflow:hidden;">.</span>
+      <span style="font-size:12px;color:#8B949E;font-family:'SF Mono',Consolas,Monaco,monospace;letter-spacing:1px;"><span leaf="">~/article — zsh</span></span>
+    </section>
+    <!-- 终端内容区 -->
+    <section style="background:#0D1117;padding:22px 24px 20px;">
+      <!-- 命令行提示符 -->
+      <p style="margin:0 0 14px;font-family:'SF Mono',Consolas,Monaco,monospace;font-size:13px;color:#8B949E;line-height:1.5;">
+        <span style="color:#3FB950;"><span leaf="">~/article $</span></span>
+        <span leaf=""> cat quote.txt</span>
+      </p>
+      <!-- 引言正文 -->
+      <p style="font-size:16px;font-weight:700;color:#F0F6FC;margin:0 0 10px;line-height:1.75;padding-left:4px;">
+        <span style="color:#3FB950;font-family:'SF Mono',Consolas,Monaco,monospace;font-size:20px;font-weight:900;"><span leaf="">"</span></span>
+        <span leaf=""> </span>
+        <span style="border-bottom:2px solid #3FB950;"><span leaf="">可复用的能力</span></span>
+        <span leaf="">，排版不该是写完文章后最痛苦的一步——当它变成可复用的能力，每次发布都在省时间。</span>
+      </p>
+      <!-- 署名行 -->
+      <p style="text-align:right;font-size:12px;color:#8B949E;margin:10px 0 0;font-family:'SF Mono',Consolas,Monaco,monospace;letter-spacing:1px;">
+        <span leaf="">—— 林深</span>
+      </p>
+    </section>
+  </section>
+
+  <!-- 2. 前言正文 -->
+  <section style="padding:0 0 20px;">
+    <p style="margin-bottom:20px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span leaf="">最近我把公众号排版做成了流水线。先看一段</span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">核心代码</span></span>
+      <span leaf="">：</span>
+    </p>
+
+    <!-- Python 代码块（通用库 1a 深色代码块） -->
+    <section style="margin:0 10px 24px;border-radius:10px;overflow:hidden;background:#1E293B;box-shadow:0 6px 20px -8px rgba(15,23,42,0.45);">
+      <section style="display:flex;align-items:center;padding:10px 16px;background:#0F172A;">
+        <span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#FF5F56;margin-right:7px;font-size:0;line-height:0;overflow:hidden;">.</span>
+        <span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#FFBD2E;margin-right:7px;font-size:0;line-height:0;overflow:hidden;">.</span>
+        <span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#27C93F;font-size:0;line-height:0;overflow:hidden;">.</span>
+        <span style="margin-left:12px;font-size:12px;color:#64748B;font-family:'SF Mono','Roboto Mono',Consolas,Monaco,monospace;letter-spacing:1px;"><span leaf="">python</span></span>
+      </section>
+      <section style="padding:16px 18px;overflow-x:auto;">
+        <p style="margin:0;font-family:'SF Mono','Roboto Mono',Consolas,Monaco,'Courier New',monospace;font-size:13px;line-height:1.8;color:#E2E8F0;white-space:pre;"><span leaf="">def render(article, theme="红白色系"):</span><br>
+<span leaf="">    html = build(article, theme)</span><br>
+<span leaf="">    return validate(html)  # 必须过校验</span></p>
+      </section>
+    </section>
+  </section>
+
+  <!-- 3. 目录导航（暗卡三列） -->
+  <section style="padding:0 10px 32px;">
+    <p style="font-size:13px;color:#8B949E;margin:0 0 14px;font-family:'SF Mono',Consolas,Monaco,monospace;letter-spacing:2px;">
+      <span style="color:#3FB950;"><span leaf="">#</span></span>
+      <span leaf=""> 本文看点</span>
+    </p>
+    <section style="display:flex;justify-content:space-between;">
+      <section style="flex:1;background:#161B22;border-radius:8px;padding:16px 12px;margin-right:8px;text-align:center;border:1px solid #30363D;">
+        <p style="font-size:18px;font-weight:900;color:#3FB950;margin:0 0 8px;font-family:'SF Mono',Consolas,Monaco,monospace;line-height:1;"><span leaf="">01</span></p>
+        <p style="font-size:12px;font-weight:700;color:#C9D1D9;margin:0;line-height:1.5;"><span leaf="">为什么要做这件事</span></p>
+      </section>
+      <section style="flex:1;background:#161B22;border-radius:8px;padding:16px 12px;margin-right:8px;text-align:center;border:1px solid #30363D;">
+        <p style="font-size:18px;font-weight:900;color:#3FB950;margin:0 0 8px;font-family:'SF Mono',Consolas,Monaco,monospace;line-height:1;"><span leaf="">02</span></p>
+        <p style="font-size:12px;font-weight:700;color:#C9D1D9;margin:0;line-height:1.5;"><span leaf="">核心方法</span></p>
+      </section>
+      <section style="flex:1;background:#161B22;border-radius:8px;padding:16px 12px;text-align:center;border:1px solid #30363D;">
+        <p style="font-size:18px;font-weight:900;color:#3FB950;margin:0 0 8px;font-family:'SF Mono',Consolas,Monaco,monospace;line-height:1;"><span leaf="">03</span></p>
+        <p style="font-size:12px;font-weight:700;color:#C9D1D9;margin:0;line-height:1.5;"><span leaf="">写在最后</span></p>
+      </section>
+    </section>
+  </section>
+
+  <!-- 4. 章节分割线 -->
+  <section style="padding:0 10px;">
+    <section style="height:1px;background:linear-gradient(to right, transparent, #3FB950, #58A6FF, #3FB950, transparent);margin:0;">
+      <span leaf=""><br></span>
+    </section>
+  </section>
+
+  <!-- 5. 第一章：为什么要做这件事 -->
+  <section style="margin-top:48px;margin-bottom:28px;padding:0 10px;">
+    <section style="border-bottom:2px solid #3FB950;margin-bottom:20px;padding-bottom:14px;">
+      <section style="display:flex;align-items:center;">
+        <span style="font-family:'SF Mono',Consolas,Monaco,monospace;font-size:22px;font-weight:900;color:#3FB950;margin-right:10px;line-height:1;"><span leaf="">$</span></span>
+        <span style="font-family:'SF Mono',Consolas,Monaco,monospace;font-size:20px;font-weight:900;color:#3FB950;margin-right:16px;line-height:1;"><span leaf="">01</span></span>
+        <section>
+          <p style="font-size:10px;color:#58A6FF;font-weight:700;letter-spacing:3px;margin:0 0 2px;text-transform:uppercase;font-family:'SF Mono',Consolas,Monaco,monospace;">
+            <span leaf="">WHY</span>
+          </p>
+          <h3 style="font-size:18px;font-weight:800;color:#F0F6FC;margin:0;letter-spacing:0.5px;">
+            <span leaf="">为什么要做这件事</span>
+          </h3>
+        </section>
+      </section>
+    </section>
+
+    <p style="margin-bottom:20px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span leaf="">公众号编辑器限制很多，比如不能用</span>
+      <span style="background:#161B22;color:#3FB950;padding:1px 6px;border-radius:4px;font-family:'SF Mono',Consolas,Monaco,monospace;font-size:13px;border:1px solid #30363D;"><span leaf="">&lt;style&gt;</span></span>
+      <span leaf="">标签。</span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">常见的坑</span></span>
+      <span leaf="">有：</span>
+    </p>
+
+    <!-- 列表转段落 -->
+    <p style="margin-bottom:14px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span style="color:#3FB950;font-family:'SF Mono',Consolas,Monaco,monospace;font-weight:700;"><span leaf="">▸</span></span>
+      <span leaf=""> </span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">样式必须全部内联</span></span>
+    </p>
+    <p style="margin-bottom:20px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span style="color:#3FB950;font-family:'SF Mono',Consolas,Monaco,monospace;font-weight:700;"><span leaf="">▸</span></span>
+      <span leaf=""> </span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">所有文字要用 span 包裹</span></span>
+    </p>
+
+    <p style="margin-bottom:20px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span leaf="">下面是排版前后的</span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">效果对比</span></span>
+      <span leaf="">：</span>
+    </p>
+
+    <!-- 图片：排版前后对比（组件 10 图片容器 + 说明） -->
+    <section style="background:#161B22;border-radius:10px;padding:6px;border:1px solid #30363D;box-shadow:0 4px 16px -4px rgba(0,0,0,0.5);margin:0 10px 8px;">
+      <section style="margin:0;border-radius:6px;overflow:hidden;">
+        <span leaf=""><img src="images/before-after.png" style="max-width:100%;"></span>
+      </section>
+    </section>
+    <p style="font-size:12px;color:#8B949E;text-align:center;margin:0 10px 24px;font-family:'SF Mono',Consolas,Monaco,monospace;">
+      <span leaf="">// 排版前后对比</span>
+    </p>
+
+    <p style="margin-bottom:20px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span leaf="">还有一段</span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">操作流程的动图演示</span></span>
+      <span leaf="">：</span>
+    </p>
+
+    <!-- GIF 动图（使用组件 10 图片容器，终端风格适配） -->
+    <section style="background:#161B22;border-radius:10px;padding:6px;border:1px solid #30363D;box-shadow:0 4px 16px -4px rgba(0,0,0,0.5);margin:0 10px 8px;">
+      <section style="margin:0;border-radius:6px;overflow:hidden;">
+        <span leaf=""><img src="demo.gif" style="max-width:100%;"></span>
+      </section>
+    </section>
+    <p style="text-align:center;margin:0 10px 24px;">
+      <span style="display:inline-block;background:#161B22;color:#3FB950;font-size:11px;font-weight:700;padding:1px 8px;border-radius:4px;margin-right:6px;border:1px solid #30363D;font-family:'SF Mono',Consolas,Monaco,monospace;"><span leaf="">GIF 动图</span></span>
+      <span style="font-size:12px;color:#8B949E;"><span leaf="">操作流程演示</span></span>
+    </p>
+
+  </section>
+
+  <!-- 6. 章节分割线 -->
+  <section style="padding:0 10px;">
+    <section style="height:1px;background:linear-gradient(to right, transparent, #3FB950, #58A6FF, #3FB950, transparent);margin:0;">
+      <span leaf=""><br></span>
+    </section>
+  </section>
+
+  <!-- 7. 第二章：核心方法 -->
+  <section style="margin-top:48px;margin-bottom:28px;padding:0 10px;">
+    <section style="border-bottom:2px solid #3FB950;margin-bottom:20px;padding-bottom:14px;">
+      <section style="display:flex;align-items:center;">
+        <span style="font-family:'SF Mono',Consolas,Monaco,monospace;font-size:22px;font-weight:900;color:#3FB950;margin-right:10px;line-height:1;"><span leaf="">$</span></span>
+        <span style="font-family:'SF Mono',Consolas,Monaco,monospace;font-size:20px;font-weight:900;color:#3FB950;margin-right:16px;line-height:1;"><span leaf="">02</span></span>
+        <section>
+          <p style="font-size:10px;color:#58A6FF;font-weight:700;letter-spacing:3px;margin:0 0 2px;text-transform:uppercase;font-family:'SF Mono',Consolas,Monaco,monospace;">
+            <span leaf="">CORE METHOD</span>
+          </p>
+          <h3 style="font-size:18px;font-weight:800;color:#F0F6FC;margin:0;letter-spacing:0.5px;">
+            <span leaf="">核心方法</span>
+          </h3>
+        </section>
+      </section>
+    </section>
+
+    <p style="margin-bottom:20px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span leaf="">把专家经验沉淀成组件库。</span>
+      <span style="background:#161B22;color:#3FB950;padding:2px 8px;border-radius:4px;font-weight:700;border:1px solid #30363D;font-family:'SF Mono',Consolas,Monaco,monospace;font-size:13px;"><span leaf="">组件库</span></span>
+      <span leaf="">才是</span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">真正的资产，不是提示词</span></span>
+      <span leaf="">。</span>
+    </p>
+
+    <!-- 引用块：核心金句（组件 8a） -->
+    <section style="background:#161B22;border-radius:0 10px 10px 0;border-left:4px solid #3FB950;padding:18px 22px;margin:0 10px 24px;">
+      <p style="font-size:16px;font-weight:800;color:#F0F6FC;margin:0;line-height:1.8;">
+        <span leaf="">「好 Skill 不是一次写完，而是像代码质量一样</span>
+        <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">持续维护</span></span>
+        <span leaf="">。」</span>
+      </p>
+    </section>
+
+    <p style="margin-bottom:20px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span leaf="">行内用</span>
+      <span style="background:#161B22;color:#3FB950;padding:1px 6px;border-radius:4px;font-family:'SF Mono',Consolas,Monaco,monospace;font-size:13px;border:1px solid #30363D;"><span leaf="">validate_gzh_html.py</span></span>
+      <span leaf="">做</span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">合规兜底</span></span>
+      <span leaf="">，每次生成后必须跑一遍。</span>
+    </p>
+
+  </section>
+
+  <!-- 8. 章节分割线 -->
+  <section style="padding:0 10px;">
+    <section style="height:1px;background:linear-gradient(to right, transparent, #3FB950, #58A6FF, #3FB950, transparent);margin:0;">
+      <span leaf=""><br></span>
+    </section>
+  </section>
+
+  <!-- 9. 结语章节：写在最后 -->
+  <section style="margin-top:48px;margin-bottom:28px;padding:0 10px;">
+    <section style="border-bottom:2px solid #3FB950;margin-bottom:20px;padding-bottom:14px;">
+      <section style="display:flex;align-items:center;">
+        <span style="font-family:'SF Mono',Consolas,Monaco,monospace;font-size:22px;font-weight:900;color:#3FB950;margin-right:10px;line-height:1;"><span leaf="">$</span></span>
+        <span style="font-family:'SF Mono',Consolas,Monaco,monospace;font-size:16px;font-weight:900;color:#3FB950;margin-right:12px;line-height:1;"><span leaf="">///</span></span>
+        <section>
+          <p style="font-size:10px;color:#58A6FF;font-weight:700;letter-spacing:3px;margin:0 0 2px;text-transform:uppercase;font-family:'SF Mono',Consolas,Monaco,monospace;">
+            <span leaf="">CLOSING</span>
+          </p>
+          <h3 style="font-size:18px;font-weight:800;color:#F0F6FC;margin:0;letter-spacing:0.5px;">
+            <span leaf="">写在最后</span>
+          </h3>
+        </section>
+      </section>
+    </section>
+
+    <p style="margin-bottom:20px;font-size:15px;line-height:1.8;text-align:justify;color:#C9D1D9;padding:0 10px;">
+      <span leaf="">每一次</span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">真实任务</span></span>
+      <span leaf="">，都是在积累</span>
+      <span style="border-bottom:2px solid #3FB950;font-weight:600;color:#F0F6FC;"><span leaf="">下一次能调用的能力资产</span></span>
+      <span leaf="">。</span>
+    </p>
+
+  </section>
+
+  <!-- 10. END 分割线 -->
+  <section style="padding:0 10px;">
+    <section style="text-align:center;margin:0 0 32px;">
+      <section style="display:flex;align-items:center;justify-content:center;">
+        <span style="height:1px;width:60px;background:linear-gradient(to right,transparent,#3FB950);margin-right:12px;"></span>
+        <span style="font-size:11px;color:#3FB950;letter-spacing:3px;font-weight:700;font-family:'SF Mono',Consolas,Monaco,monospace;"><span leaf="">EOF</span></span>
+        <span style="height:1px;width:60px;background:linear-gradient(to left,transparent,#3FB950);margin-left:12px;"></span>
+      </section>
+    </section>
+  </section>
+
+  <!-- 11. 尾部作者签名区（并入原文末尾的"甲木"段，唯一出现） -->
+  <section style="padding:0 10px;">
+    <section style="background:#161B22;border-radius:10px;padding:20px 24px;border:1px solid #30363D;margin-bottom:16px;">
+      <p style="font-family:'SF Mono',Consolas,Monaco,monospace;font-size:12px;color:#8B949E;margin:0 0 10px;">
+        <span style="color:#3FB950;"><span leaf="">$</span></span>
+        <span leaf=""> whoami</span>
+      </p>
+      <p style="margin-bottom:14px;font-size:15px;line-height:1.8;color:#C9D1D9;">
+        <span leaf="">我是甲木，热衷于分享一些 AI 观察，AI 干货内容。</span>
+      </p>
+      <p style="margin-bottom:0;font-size:15px;line-height:1.8;color:#C9D1D9;">
+        <span leaf="">如果你觉得今天这篇有收获，欢迎</span>
+        <strong style="color:#3FB950;"><span leaf="">点赞、在看、转发</span></strong>
+        <span leaf="">三连，我们下篇见。</span>
+      </p>
+    </section>
+  </section>
+
+</section>

@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+*.log
+
+# Editor
+.vscode/
+.idea/
+
+# 本地临时产物（排版输出的 HTML 不入库，除 docs/gallery 示例外）
+/*.html
+*_排版_*.html
+
+# 预览图托管在 GitHub Release，不入库
+docs/screenshots/
+*.png
