@@ -42,6 +42,14 @@ SKIP_TAGS = {"head", "title", "style", "script"}  # 不参与公众号正文粘�
 # 中文字后紧跟半角逗号/分号/叹号/问号（应改全角）；只查"中文在前"避免中英混排误伤
 HALF_PUNCT = re.compile(r"[一-鿿㐀-䶿][,;!?]")
 ASCII_QUOTE = re.compile(r"[\"']")
+# A missing quote in a leaf attribute can swallow the rest of a fragment,
+# including the preview page's script, while HTMLParser still reports a leaf
+# attribute. Detect this before parsing so the output cannot pass silently.
+MALFORMED_LEAF = re.compile(
+    r"<span\b(?:(?!</span>).)*\bleaf\s*=\s*"
+    r"(?:\"(?:(?!\").)*</span>|'(?:(?!').)*</span>)",
+    re.I | re.S,
+)
 # 代码区特征：等宽字体或 white-space:pre —— 其内半角符号是正常的
 CODE_STYLE = re.compile(r"monospace|white-space\s*:\s*pre|courier|consolas|sf mono", re.I)
 
@@ -104,6 +112,13 @@ def validate(html, name="<input>"):
         if hits:
             (errors if level == "ERROR" else warnings).append(
                 f"{msg}（命中 {hits} 处）")
+
+    malformed_leaf_hits = len(MALFORMED_LEAF.findall(html))
+    if malformed_leaf_hits:
+        errors.append(
+            f"检测到 {malformed_leaf_hits} 处未闭合的 leaf 属性——"
+            "请修复 <span leaf=\"\"> 属性，否则可能吞掉后续 HTML/脚本"
+        )
 
     checker = LeafChecker()
     try:
