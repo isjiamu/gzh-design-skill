@@ -17,6 +17,60 @@
   .gzh-stage{max-width:700px;margin:78px auto 64px;padding:0 8px;}
   @media(max-width:520px){.gzh-hint{max-width:150px;}}
 </style>
+<script>
+  function gzhShowToast(msg){
+    var t=document.getElementById('gzhToast');
+    t.textContent=msg;t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer=setTimeout(function(){t.classList.remove('show');},2800);
+  }
+  function gzhSelect(el){
+    var range=document.createRange();
+    range.selectNodeContents(el);
+    var sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    return sel;
+  }
+  async function gzhCopy(){
+    var el=document.getElementById('gzh-content');
+    var sel;
+    var ok=false;
+
+    // 优先写入 HTML + 纯文本，保留公众号粘贴所需的内联样式。
+    try{
+      if(window.isSecureContext && navigator.clipboard && window.ClipboardItem){
+        var html=el.innerHTML.trim();
+        var plain=el.innerText || el.textContent || '';
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html':new Blob([html],{type:'text/html'}),
+          'text/plain':new Blob([plain],{type:'text/plain'})
+        })]);
+        ok=true;
+      }
+    }catch(e){ok=false;}
+
+    // 兼容 file:// 页面及不支持 ClipboardItem 的浏览器。
+    if(!ok){
+      try{
+        sel=gzhSelect(el);
+        ok=document.execCommand('copy');
+      }catch(e){ok=false;}
+    }
+
+    var btn=document.getElementById('gzhCopyBtn');
+    if(ok){
+      if(sel){sel.removeAllRanges();}
+      gzhShowToast('✅ 已复制！去公众号编辑器按 Ctrl/⌘+V 粘贴即可');
+      var old=btn.textContent;btn.textContent='✅ 已复制';
+      setTimeout(function(){btn.textContent=old;},2200);
+    }else{
+      // 保留选区，让用户可直接按 Ctrl/⌘+C 完成最后一步。
+      if(!sel){sel=gzhSelect(el);}
+      gzhShowToast('⚠ 浏览器阻止了自动复制，内容已选中，请按 Ctrl/⌘+C 再粘贴');
+    }
+  }
+</script>
 </head>
 <body>
 <div class="gzh-toolbar">
@@ -29,33 +83,5 @@
 <!--GZH_CONTENT-->
   </div>
 </div>
-<script>
-  function gzhShowToast(msg){
-    var t=document.getElementById('gzhToast');
-    t.textContent=msg;t.classList.add('show');
-    clearTimeout(t._timer);
-    t._timer=setTimeout(function(){t.classList.remove('show');},2800);
-  }
-  function gzhCopy(){
-    var el=document.getElementById('gzh-content');
-    // 选中渲染后的富文本节点并复制（等价于手动 Ctrl+A / Ctrl+C，保留全部样式）
-    var range=document.createRange();
-    range.selectNodeContents(el);
-    var sel=window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-    var ok=false;
-    try{ok=document.execCommand('copy');}catch(e){ok=false;}
-    sel.removeAllRanges();
-    var btn=document.getElementById('gzhCopyBtn');
-    if(ok){
-      gzhShowToast('✅ 已复制！去公众号编辑器按 Ctrl/⌘+V 粘贴即可');
-      var old=btn.textContent;btn.textContent='✅ 已复制';
-      setTimeout(function(){btn.textContent=old;},2200);
-    }else{
-      gzhShowToast('⚠ 自动复制失败，请手动全选(Ctrl/⌘+A)再复制(Ctrl/⌘+C)');
-    }
-  }
-</script>
 </body>
 </html>
