@@ -44,6 +44,9 @@ HALF_PUNCT = re.compile(r"[一-鿿㐀-䶿][,;!?]")
 ASCII_QUOTE = re.compile(r"[\"']")
 # 代码区特征：等宽字体或 white-space:pre —— 其内半角符号是正常的
 CODE_STYLE = re.compile(r"monospace|white-space\s*:\s*pre|courier|consolas|sf mono", re.I)
+SECTION_START = re.compile(r"<section\b([^>]*)>", re.I)
+STYLE_ATTR = re.compile(r"\bstyle\s*=\s*(['\"])(.*?)\1", re.I | re.S)
+BACKGROUND_PROP = re.compile(r"(?:^|;)\s*background(?:-[\w-]+)?\s*:", re.I)
 
 
 class LeafChecker(HTMLParser):
@@ -127,6 +130,19 @@ def validate(html, name="<input>"):
         warnings.append(
             f"{len(checker.half_punct)} 处正文疑似半角标点/英文引号，应改中文全角"
             f"（代码块内不计）。例：{sample}")
+
+    section_styles = []
+    for m in SECTION_START.finditer(html):
+        style_m = STYLE_ATTR.search(m.group(1))
+        section_styles.append(style_m.group(2) if style_m else "")
+    section_bg_count = sum(1 for style in section_styles
+                           if BACKGROUND_PROP.search(style))
+    if (len(section_styles) >= 4 and section_styles
+            and BACKGROUND_PROP.search(section_styles[0])
+            and section_bg_count <= 1):
+        warnings.append(
+            "只有最外层 <section> 检测到 background。公众号编辑器可能剥离"
+            "最外层 background，请给各正文区块分别添加 background 或等价底色")
 
     return errors, warnings, checker.span_leaf_count
 
