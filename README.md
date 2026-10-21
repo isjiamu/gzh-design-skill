@@ -285,6 +285,14 @@ A：跑 `scripts/validate_gzh_html.py`，报 ERROR 就回到装配步骤修；�
  </picture>
 </a>
 
+
+## Before/after example
+
+- Before: https://skill-fixture-before.theroost.dev
+- After: https://gzh-design-after.theroost.dev
+
+Illustrative, community-contributed example; not an official demo or benchmark.
+
 ## 🤝 贡献
 
 欢迎新主题、修复与文档改进，请先读 [CONTRIBUTING.md](CONTRIBUTING.md)。
