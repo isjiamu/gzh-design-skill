@@ -19,6 +19,8 @@ node_modules/
 # 本地临时产物（排版输出的 HTML 不入库，除 docs/gallery 示例外）
 /*.html
 *_排版_*.html
+*_内嵌.html
+*_预览.html
 
 # 预览图托管在 GitHub Release，不入库
 docs/screenshots/

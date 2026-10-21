@@ -38,14 +38,14 @@
 章节间距：         56px（后续章节 margin-top）
 ```
 
-字体栈：`-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif`
+字体：不设 `font-family`，一律 `inherit` 走平台默认字体栈（官方规范 #3）
 
 ---
 
 ## 组件 1 全局容器
 
 ```html
-<section style="max-width:677px;margin:0 auto;background:#FFFFFF;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#52525B;line-height:1.8;letter-spacing:0.3px;overflow-x:hidden;">
+<section style="max-width:677px;margin:0 auto;background:#FFFFFF;font-family:inherit;color:#52525B;line-height:1.8;letter-spacing:0.3px;overflow-x:hidden;">
 
   <!-- 所有组件放在这里 -->
 
@@ -605,7 +605,7 @@ GIF 动图角标改极简描边胶囊：边框与字色用石墨主色 `#52525B`
 ## 完整文章模板骨架
 
 ```html
-<section style="max-width:677px;margin:0 auto;background:#FFFFFF;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#52525B;line-height:1.8;letter-spacing:0.3px;overflow-x:hidden;">
+<section style="max-width:677px;margin:0 auto;background:#FFFFFF;font-family:inherit;color:#52525B;line-height:1.8;letter-spacing:0.3px;overflow-x:hidden;">
 
   <!-- 1. 开头引言卡片（组件2，纯白 + 上下细线 + 大字金句） -->
 

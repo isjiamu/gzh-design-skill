@@ -2,7 +2,7 @@
 
 > **使用说明**：本组件库为「留白禅意风」主题，所有组件使用**内联样式**，可直接复制粘贴到微信公众号编辑器。
 >
-> **设计风格**：极简超大留白 + 东方禅意气质、衬线大字金句、细线分层、几乎无色块。靠留白和 1px 细线建立层次，克制、沉静、高级。
+> **设计风格**：极简超大留白 + 东方禅意气质、大字重金句、细线分层、几乎无色块。靠留白和 1px 细线建立层次，克制、沉静、高级。
 >
 > **公众号平台限制须知**：
 > - ❌ 不支持 `<style>` 标签、`<script>` 标签、CSS class
@@ -21,7 +21,7 @@
 
 ```
 主色调（墨绿）：    #4A5D52（点缀/强调专用，克制使用）
-标题色：            #2B2B2B（近黑，衬线大字）
+标题色：            #2B2B2B（近黑，大字重）
 正文色：            #525252（中深灰）
 辅助文字色：        #A3A3A3（小字/说明/署名）
 细线色：            #E8E8E8（1px 分隔线，贯穿全文）
@@ -38,8 +38,8 @@
 章节上下留白：      64px+
 内容区边距：        0 16px（左右各 16px，比红白系更宽）
 
-标题字体：          'Noto Serif SC', Georgia, 'Times New Roman', serif（衬线）
-正文字体：          -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif
+字体：              不设 font-family，一律 `inherit` 走平台默认字体栈（官方规范 #3：自定义字体在 iOS/安卓渲染不一致）
+气质手法：          靠字重、字间距、留白与细线营造，不靠字体族
 ```
 
 ---
@@ -47,7 +47,7 @@
 ## 组件 1 全局容器
 
 ```html
-<section style="max-width: 677px;margin: 0 auto;background: #FFFFFF;font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;color: #525252;line-height: 1.9;letter-spacing: 0.3px;overflow-x: hidden;">
+<section style="max-width: 677px;margin: 0 auto;background: #FFFFFF;font-family: inherit;color: #525252;line-height: 1.9;letter-spacing: 0.3px;overflow-x: hidden;">
 
   <!-- 所有组件放在这里 -->
 
@@ -56,14 +56,14 @@
 
 ---
 
-## 组件 2 开头引言卡片（纯白 + 居中细线上下边 + 衬线大字金句）
+## 组件 2 开头引言卡片（纯白 + 居中细线上下边 + 大字重金句）
 
-> 纯白底，上下各一条 1px 细线（`#E8E8E8`），衬线字体大字金句居中，右下署名。无边框、无阴影、无色块——完全靠留白和细线传递气质。
+> 纯白底，上下各一条 1px 细线（`#E8E8E8`），大字重金句居中，右下署名。无边框、无阴影、无色块——完全靠留白和细线传递气质。
 
 ```html
 <section style="margin: 32px 16px 48px;padding: 40px 24px;border-top: 1px solid #E8E8E8;border-bottom: 1px solid #E8E8E8;text-align: center;">
-  <p style="font-family: 'Noto Serif SC', Georgia, 'Times New Roman', serif;font-size: 19px;font-weight: 600;color: #2B2B2B;margin: 0 0 28px;line-height: 1.85;letter-spacing: 0.8px;">
-    <span leaf="">这里放开篇金句，衬线字体自带书卷气，</span><span leaf="">留白让文字自己呼吸。</span>
+  <p style="font-family: inherit;font-size: 19px;font-weight: 600;color: #2B2B2B;margin: 0 0 28px;line-height: 1.85;letter-spacing: 0.8px;">
+    <span leaf="">这里放开篇金句，字重与留白自带书卷气，</span><span leaf="">留白让文字自己呼吸。</span>
   </p>
   <p style="font-size: 12px;color: #A3A3A3;margin: 0;letter-spacing: 1.5px;">
     <span leaf="">—— 作者名（按文章作者/主题而定）</span>
@@ -71,7 +71,7 @@
 </section>
 ```
 
-**效果**：纯白无色块，细线框定空间，衬线大字在大留白中极有质感。署名占位不写死品牌名。
+**效果**：纯白无色块，细线框定空间，大字重在大留白中极有质感。署名占位不写死品牌名。
 
 ---
 
@@ -119,16 +119,16 @@
 
 ---
 
-## 组件 5 章节标题组件（小号墨绿英文 + 大号衬线中文 + 短细线）
+## 组件 5 章节标题组件（小号墨绿英文 + 大号粗体中文字 + 短细线）
 
-> 英文小标签（极小号，墨绿，大字间距）+ 衬线中文大标题 + 标题下方一条短细线（40px 宽，墨绿）。编号低调嵌入英文标签前。无色块，无粗边框。
+> 英文小标签（极小号，墨绿，大字间距）+ 粗体中文字大标题 + 标题下方一条短细线（40px 宽，墨绿）。编号低调嵌入英文标签前。无色块，无粗边框。
 
 ```html
 <section style="margin-top: 64px;margin-bottom: 32px;padding: 0 16px;">
   <p style="font-size: 10px;color: #4A5D52;font-weight: 600;letter-spacing: 4px;margin: 0 0 10px;text-transform: uppercase;">
     <span leaf="">01 · CHAPTER ONE</span>
   </p>
-  <h3 style="font-family: 'Noto Serif SC', Georgia, 'Times New Roman', serif;font-size: 22px;font-weight: 700;color: #2B2B2B;margin: 0 0 16px;letter-spacing: 0.5px;line-height: 1.4;">
+  <h3 style="font-family: inherit;font-size: 22px;font-weight: 700;color: #2B2B2B;margin: 0 0 16px;letter-spacing: 0.5px;line-height: 1.4;">
     <span leaf="">中文章节大标题</span>
   </h3>
   <section style="width: 40px;height: 2px;background: #4A5D52;">
@@ -248,14 +248,14 @@
 
 ## 组件 8 引用块（3 种变体）
 
-### 8a. 居中衬线大字引用（核心金句，视觉焦点最强）
+### 8a. 居中大字重引用（核心金句，视觉焦点最强）
 
-> 纯白底，上下各一条 1px 细线，衬线字体居中，大留白。这是禅意风最具特色的引用形式——不用色块，靠留白和字体传递力量。
+> 纯白底，上下各一条 1px 细线，大字重居中，大留白。这是禅意风最具特色的引用形式——不用色块，靠留白和字体传递力量。
 
 ```html
 <section style="margin: 40px 16px;padding: 36px 20px;border-top: 1px solid #E8E8E8;border-bottom: 1px solid #E8E8E8;text-align: center;">
-  <p style="font-family: 'Noto Serif SC', Georgia, 'Times New Roman', serif;font-size: 17px;font-weight: 600;color: #2B2B2B;margin: 0;line-height: 1.9;letter-spacing: 0.8px;">
-    <span leaf="">「这里是核心金句，衬线字体 + 大留白 + 细线框定。」</span>
+  <p style="font-family: inherit;font-size: 17px;font-weight: 600;color: #2B2B2B;margin: 0;line-height: 1.9;letter-spacing: 0.8px;">
+    <span leaf="">「这里是核心金句，大字重 + 大留白 + 细线框定。」</span>
   </p>
 </section>
 ```
@@ -353,11 +353,11 @@
 ```html
 <section style="display: flex;margin: 0 16px 32px;">
   <section style="flex: 1;border: 1px solid #E8E8E8;padding: 24px 16px;margin-right: 12px;text-align: center;">
-    <p style="font-family: 'Noto Serif SC', Georgia, 'Times New Roman', serif;font-size: 32px;font-weight: 700;color: #2B2B2B;margin: 0 0 8px;line-height: 1;"><span leaf="">14亿</span></p>
+    <p style="font-family: inherit;font-size: 32px;font-weight: 700;color: #2B2B2B;margin: 0 0 8px;line-height: 1;"><span leaf="">14亿</span></p>
     <p style="font-size: 11px;color: #A3A3A3;margin: 0;letter-spacing: 1px;"><span leaf="">覆盖用户</span></p>
   </section>
   <section style="flex: 1;border: 1px solid #E8E8E8;padding: 24px 16px;text-align: center;">
-    <p style="font-family: 'Noto Serif SC', Georgia, 'Times New Roman', serif;font-size: 32px;font-weight: 700;color: #2B2B2B;margin: 0 0 8px;line-height: 1;"><span leaf="">3步</span></p>
+    <p style="font-family: inherit;font-size: 32px;font-weight: 700;color: #2B2B2B;margin: 0 0 8px;line-height: 1;"><span leaf="">3步</span></p>
     <p style="font-size: 11px;color: #A3A3A3;margin: 0;letter-spacing: 1px;"><span leaf="">快速接入</span></p>
   </section>
 </section>
@@ -438,9 +438,9 @@
 ## 完整文章模板骨架
 
 ```html
-<section style="max-width: 677px;margin: 0 auto;background: #FFFFFF;font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;color: #525252;line-height: 1.9;letter-spacing: 0.3px;overflow-x: hidden;">
+<section style="max-width: 677px;margin: 0 auto;background: #FFFFFF;font-family: inherit;color: #525252;line-height: 1.9;letter-spacing: 0.3px;overflow-x: hidden;">
 
-  <!-- 1. 开头引言卡片（纯白 + 上下细线 + 衬线大字） -->
+  <!-- 1. 开头引言卡片（纯白 + 上下细线 + 大字重） -->
   <!-- 组件 2 -->
 
   <!-- 2. 前言正文（开场白） -->
@@ -455,7 +455,7 @@
   <!-- 组件 4 1px 极细线 -->
 
   <!-- 5. 第一章 -->
-  <!-- 组件 5（编号 01 · CHAPTER ONE + 衬线大标题 + 短墨绿线） -->
+  <!-- 组件 5（编号 01 · CHAPTER ONE + 粗体大标题 + 短墨绿线） -->
   <!--   组件 6 正文 + 组件 7 高亮 + 组件 8 引用 + 组件 9 提示 + 组件 10 图片 + 组件 12 数据卡片 -->
 
   <!-- 6. 章节分割线 -->
@@ -492,7 +492,7 @@
 **克制原则**：
 - 墨绿色（`#4A5D52`）**全文出现频率极低**：仅用于编号小字、章节短线、竖条、加粗锚点、CTA
 - 不用色块底色——引用/提示统一用细线 + 大留白 + 类型小标签，无背景色
-- 数据卡片用细线边框而非色块，数字用衬线字体提气质
+- 数据卡片用细线边框而非色块，数字靠字重与字距提气质
 - 所有圆角极小（2px）或不用圆角——方形细线更符合禅意气质
 
 ---
@@ -503,11 +503,11 @@
 
 | 文章类型 | 核心组件组合 | 点缀组件 |
 |---|---|---|
-| 观点/深度随笔（本主题最佳场景） | 正文 6 + 居中衬线引用 8a + 加粗结论段 11 | 极细线旁注 8c |
-| 生活/情感/禅意冥想 | 正文 6 + 居中衬线引用 8a | 左竖条引用 8b |
+| 观点/深度随笔（本主题最佳场景） | 正文 6 + 居中大字重引用 8a + 加粗结论段 11 | 极细线旁注 8c |
+| 生活/情感/禅意冥想 | 正文 6 + 居中大字重引用 8a | 左竖条引用 8b |
 | 读书笔记/知识整理 | 正文 6 + 要点列表 12 + 浅墨绿标签 7b | 提示块 9 |
 | 教程/清单（弱契合，建议换主题） | 正文 6 + 要点列表 12 + 提示块 9 | 数据卡片 12 |
-| 访谈/人物特稿 | 正文 6 + 左竖条引用 8b（引语）+ 居中衬线引用 8a（金句） | 极细线旁注 8c |
+| 访谈/人物特稿 | 正文 6 + 左竖条引用 8b（引语）+ 居中大字重引用 8a（金句） | 极细线旁注 8c |
 | 数据复盘 | 正文 6 + 数据卡片组 12 | 加粗结论段 11 |
 
 所有类型共用固定结构：引言卡 2 + 目录 3 + 章节标题 5 + 分割线 4 + END 14 + 签名 15。教程、盘点、强运营类内容与本主题气质不符，选主题时应主动提示用户换摸鱼绿等信息密度更高的主题。
@@ -519,19 +519,19 @@
 | Markdown 元素 | 对应组件 | 说明 |
 |---|---|---|
 | `# 标题` | 不使用 | 公众号文章标题在平台设置 |
-| `> 引言金句` | 组件 2 纯白细线引言卡片 | 文章开头，衬线大字居中 |
-| `## 章节标题` | 组件 5 章节标题 | 小号墨绿英文 + 衬线中文 + 短细线，编号 01/02/03，结语用 ∞ |
+| `> 引言金句` | 组件 2 纯白细线引言卡片 | 文章开头，大字重居中 |
+| `## 章节标题` | 组件 5 章节标题 | 小号墨绿英文 + 粗体中文 + 短细线，编号 01/02/03，结语用 ∞ |
 | 普通段落 | 组件 6 正文段落 | 默认样式，主动标记关键词下划线 |
 | `**加粗文字**` | 组件 7a 普通加粗（默认）或墨绿加粗（锚点） | 普通加粗为主 |
 | `==高亮文字==` | 组件 7b 浅墨绿底深字标签 | 核心概念 |
 | `<u>下划线</u>` | 组件 7d 低饱和墨绿下划线 | 1.5px `#B5C8BC` |
 | `~~荧光笔~~` | 组件 7e 极浅墨绿荧光笔 | 纯色浅底高亮，偶尔用 |
-| `> 引用段落`（金句） | 组件 8a 居中衬线细线引用 | 核心金句，衬线居中最有力 |
+| `> 引用段落`（金句） | 组件 8a 居中大字重细线引用 | 核心金句，大字重居中最有力 |
 | `> 引用段落`（旁注） | 组件 8b 左竖条轻量引用 | 补充说明 |
 | 极轻量旁注 | 组件 8c 极细线旁注 | 个人感想，字色最浅 |
 | `!> 提示文字` | 组件 9 提示块 | 墨绿左竖条 + NOTE 小标签 |
 | `![](图片)` | 组件 10 图片容器 | 细线边框，有说明才加说明 |
-| 数据展示 | 组件 12 数据卡片组 | 衬线大号数字，细线边框 |
+| 数据展示 | 组件 12 数据卡片组 | 大号粗体数字，细线边框 |
 | 要点列表 | 组件 12 要点列表版 | 竖排，编号 + 细线分隔 |
 | 行内标签 | 组件 13 标签胶囊 | 浅墨绿底为默认，描边为轻量 |
 | `---` | 组件 4 章节分割线 | 1px 极细线 + 64px 留白 |

@@ -46,6 +46,11 @@
 - [ ] `【插入…】` 类待补占位用 2c 居中板块，不是左对齐提示块
 - [ ] 骨架按所选主题库的"完整文章模板骨架"装配，不套用其它主题骨架
 - [ ] 生成后跑 scripts/validate_gzh_html.py，ERROR 与半角 WARNING 清零
+- [ ] 文章有图片时跑 scripts/inline_images.py 产出 `_内嵌.html`：本地图与外链图变 base64，`mmbiz.qpic.cn` 保留原链接（失败项已提示并保留原 src）
+- [ ] 本地图片能解析：`images/x.png` 不在 HTML 目录时，靠多根查找或 `--source-dir` 命中；同名多份会提示写全路径
+- [ ] 内嵌版总体积 ≤ 8MB；预览页用内嵌版包装
+- [ ] 产物无自定义 `font-family`（一律 `inherit`）、无 `!important`、span[leaf] 内无块级元素
+- [ ] 文字/卡片背景用纯色；确有装饰渐变的，确认其上无文字（官方规范 #4.1.3）
 
 ## 自定义主题生成行为
 
@@ -70,10 +75,11 @@
 
 1. **改** 组件库 / SKILL / 脚本
 2. **源头关**：`python3 scripts/component_lint.py .`
-   扫所有组件库的 ```html 块，检测 `white-space:pre`（大空白）、四周虚线框 `border:…dashed`（正文，居中占位块豁免）、平台禁用项（div/class/id/style/grid/position/var/@media）。须 **0 ERROR**。
+   扫所有组件库的 ```html 块，检测 `white-space:pre`（大空白）、四周虚线框 `border:…dashed`（正文，居中占位块豁免）、平台禁用项（div/class/id/style/grid/position/var/@media）、自定义 `font-family`、`!important`、`<pre>`。须 **0 ERROR**。
 3. **生成** 用改后的 skill 排版 `assets/sample-article.md`（或真实文章）
 4. **产物关**：`python3 scripts/validate_gzh_html.py <产物.html>`
-   检测禁用标签、`<span leaf>` 包裹、半角标点。须 **0 ERROR、半角 0 WARN**。
-5. 任一关不过 → 回第 1 步，直到两关全绿。
+   检测禁用标签、`<span leaf>` 包裹、半角标点，以及官方规范 #1 的 CSS 属性红线（height:0 / line-height / 固定宽度 / text-align / opacity / caret-color）、#2 的结构（span leaf 内不得有块级元素）、#3 的字体（自定义 font-family）、`!important`、渐变是否压着文字。须 **0 ERROR、半角 0 WARN**，其余 WARNING 逐条确认或修复。
+5. **（可选）官方终验**：`wechatjs/verify-article-structure-spec` 的 CLI 用真实浏览器量布局，退出码 0 才算过；与本仓脚本冲突时以官方为准。
+6. 任一关不过 → 回第 1 步，直到两关全绿。
 
 两脚本分工：`component_lint` 管「组件库源头不含反模式」，`validate_gzh_html` 管「最终产物合规」。源头干净 → 产物必然跟着干净，这是循环成立的依据。

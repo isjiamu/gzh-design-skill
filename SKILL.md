@@ -81,21 +81,41 @@ description: 微信公众号文章排版引擎，将 Markdown 转换为可直接
 <SKILL_ROOT>/scripts/validate_gzh_html.py <生成的.html 的实际路径>
 ```
 
-它确定性地检查平台禁用项和 `<span leaf>` 包裹。报 ERROR 就回到第 4 步修；**半角标点 WARNING 同样要修复到 0 再交付**（这是实际使用中最高频的返工点）。
+它确定性地检查：平台禁用项、`<span leaf>` 包裹、官方规范 #1 的 CSS 属性红线（height:0 / line-height / 固定宽度 / text-align / opacity / caret-color）、#2 的节点结构（span leaf 内不得有块级元素）、#3 的字体（自定义 font-family）、`!important`、渐变是否压着文字。报 ERROR 就回到第 4 步修；**半角标点 WARNING 同样要修复到 0 再交付**（这是实际使用中最高频的返工点）。
 
-**渐变背景 WARNING 要逐项处理**：文字高亮、引用/数据/引导卡背景默认改为主题内纯色或 rgba 纯色；用户明确要求保留时，交付注明可能触发 `darkmode-no-gradient` 弹窗。纯装饰渐变也会提示，尚未确认其不会触发弹窗，保留时同样说明风险。
+**渐变背景 WARNING 要逐项处理**：脚本会区分两类——`[darkmode-no-gradient:文字背景]` 是官方规范 #4.1.2 明确不建议的（暗色模式渐变会消失），必须改成主题内纯色或 rgba 纯色；`[darkmode-no-gradient:装饰]` 表示渐变下方无文字，官方规范 #4.1.3 允许保留，但按"纯色优先"原则能改则改。用户明确要求保留时，交付注明风险。
+
+**布局类 WARNING 怎么判**：`height:0` 含文字、`line-height` 小于字号且文字成段、定宽容器内含文字，这三类移动端会真出事（官方规范 #1.3/#1.4/#1.5），必须改；≤120px 的定宽小件（编号圆点、标签胶囊）和单行大字不算违规，脚本已豁免。
+
+**可选的官方实测**（静态脚本量不到真实布局时）：官方仓库 [wechatjs/verify-article-structure-spec](https://github.com/wechatjs/verify-article-structure-spec) 用真实浏览器跑 width / height / line-height / pre 的实测，覆盖本脚本的全部规则：
+
+```bash
+git clone --depth 1 https://github.com/wechatjs/verify-article-structure-spec.git /tmp/vas
+cd /tmp/vas/cli && PUPPETEER_SKIP_DOWNLOAD=1 npm install
+npx tsx src/index.ts <生成的.html 的实际路径> --executable-path="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+```
+
+退出码 0 = 无违规。本 skill 的校验脚本是它的静态前置关（生成时就能拦），官方 CLI 是交付前的终验；两者结论冲突时以官方 CLI 为准。
 
 ### 6. 输出
 
 **产物格式：纯 `<section>…</section>` 正文片段，从全局容器开始，不要包 `<!DOCTYPE>`/`<html>`/`<head>`/`<body>`**——公众号编辑器只接受正文片段，多余的文档外壳会被丢弃或干扰粘贴。
 
-1. **干净正文文件**：HTML 保存到当前工作目录，文件名 `{原文件名}_排版_{主题中文名}({英文标识}).html`（英文标识 = theme-index 组件库文件名去掉 `theme-` 前缀与 `.md` 后缀）。这份用于校验和手动粘贴兜底。
-2. **带「复制」按钮的预览页**（让用户一键复制，免去手动全选）：
+1. **干净正文文件**：HTML 保存到当前工作目录，文件名 `{原文件名}_排版_{主题中文名}({英文标识}).html`（英文标识 = theme-index 组件库文件名去掉 `theme-` 前缀与 `.md` 后缀）。这份用于校验和手动粘贴兜底（图片保持原 URL 或用户给的本地路径）。
+2. **图片内嵌版（有图片时必做）**：把图变成 base64，HTML 变成单文件，复制、转发、离线打开都不再依赖图床，本地图片也不会因为复制丢了路径：
    ```bash
-   <SKILL_ROOT>/scripts/wrap_preview.py <上面的干净正文.html>
+   <SKILL_ROOT>/scripts/inline_images.py <干净正文.html>
+   # 原稿在别的目录（如 docx 解包的 images/ 在 md 旁边）时，把那边也加进来：
+   <SKILL_ROOT>/scripts/inline_images.py <干净正文.html> --source-dir <md/docx 所在目录>
+   ```
+   **保留/内嵌策略**：默认只保留已在微信 CDN 的 `mmbiz.qpic.cn` 链接（再内嵌只是白胖 33%），本地图片和其它外链一律内嵌——我们这边能下载不代表微信粘贴时能取到（Referer / 签名过期 / 防盗链），base64 才稳。图床确定稳想保留原链接：`--keep-remote`（全部远程）或 `--keep-host <域名>`；要完全离线的单文件：`--inline-all`。
+   **本地路径解析**：依次找 HTML 目录 → 当前目录 → 各自上两级 → `--source-dir`；都找不到再按文件名在这些目录树里唯一定位（同名多份会报错，提示你写全路径）。所以 `images/1.png` 这种相对 docx/md 的路径，HTML 存在别的目录也能命中。脚本还会下载 http(s) 图、按文件头识别格式（png/jpeg/gif/webp/bmp）、跳过已是 `data:` 的、不动注释里的示例；占位图（`{{图片URL}}`、空）单独计数提醒补图，取不到或超单图上限（默认 3MB）保留原 `src` 并标 ✗。只想先看哪张找不到，加 `--check` 不写文件。无图片的文章可跳过这一步。
+3. **带「复制」按钮的预览页**（让用户一键复制，免去手动全选）：
+   ```bash
+   <SKILL_ROOT>/scripts/wrap_preview.py <内嵌版.html>   # 有图片时用内嵌版
    ```
    产出 `{...}_预览.html`——浏览器打开后右上角有「复制到公众号」按钮，点一下即把渲染后的富文本复制到剪贴板（等价 Ctrl+A/Ctrl+C），再到公众号编辑器 Ctrl/⌘+V 粘贴。按钮和脚本只在预览外壳里、**不在被复制的 section 内**，所以粘到公众号的仍是干净合规正文。
-3. 告知用户：**打开 `{...}_预览.html` → 点右上角「复制」→ 公众号编辑器粘贴**；并给出干净正文文件路径作为兜底。附校验脚本结论（已通过 / 剩余 warning）。
+4. 告知用户：**打开 `{...}_预览.html` → 点右上角「复制」→ 公众号编辑器粘贴**；并给出内嵌版与干净正文两个路径兜底。附校验脚本结论（已通过 / 剩余 warning）与内嵌结果（内嵌几张、保留几张链接、失败哪几张、总体积）。
 
 ## 生成时的智能处理（这些是本 skill 的特色，必须做）
 
@@ -122,10 +142,15 @@ description: 微信公众号文章排版引擎，将 Markdown 转换为可直接
 
 ## 平台红线（核心，完整检查交给校验脚本）
 
-- **禁止**：`<style>`/`<script>`/`<div>`、`class`/`id` 属性、`position:fixed/absolute/sticky`、`float`、`@media`/`@keyframes`、`display:grid`、CSS 变量、外部字体/CSS。
+依据官方[《微信公众平台编辑器插件开发规范》](https://developers.weixin.qq.com/doc/service/guide/product/plugin_spec.html)（下称"官方规范 #章节"）。
+
+- **禁止**：`<style>`/`<script>`/`<div>`、`class`/`id` 属性、`position:fixed/absolute/sticky`、`float`、`@media`/`@keyframes`、`display:grid`、CSS 变量、外部字体/CSS、`!important`（官方规范 #4.5.2）。
 - **必须**：样式全部内联 `style`；所有文字节点用 `<span leaf="">文字</span>` 包裹（否则粘贴后样式丢失）。
 - **可用**：`display:flex`（有限）、`border-radius`、`box-shadow`、`<section>/<p>/<span>/<strong>/<img>/<h3>`。
-- **渐变背景兼容性**：渐变可渲染，但可能触发公众号 `darkmode-no-gradient` 内容结构检测；文字和卡片背景默认用纯色，不额外添加渐变。旧组件/自定义主题遇到此项也按第 5 步处理。
+- **不写 `font-family`**（官方规范 #3）：一律 `inherit` 走平台默认字体栈。自定义字体会让 iOS/安卓渲染不一致；"衬线/手账/杂志"气质靠字重、字间距、行高、留白与细线营造。等宽代码字体是唯一例外。
+- **节点结构**（官方规范 #2）：`<span leaf>` 是**行内**容器，里面只能放文本与行内元素（`span/strong/img`），**严禁塞 `section/p/div`**；`<section nodeleaf>` 只用于官方指定组件容器，不要自行给普通容器加 `nodeleaf`。
+- **CSS 属性红线**（官方规范 #1）：`height:0` 里不要包文字（移动端整段不可见，1.5.1）；`line-height` 不要小于字号（多行叠字，1.3）；元素不要写死 `width:px` 且内含文字（不同屏居中/溢出不一致，1.4，确有需要加 `data-ignore-width`）；`text-align` 只能用 `left/center/right`，不用 `start/end`（1.6）；`img` 的 `opacity` 不为 0（1.1）；`caret-color` 不设透明（1.2）；SVG 动画 `begin` 同时写 `touchstart; click`（1.7）；`<pre>` 只装代码并给 `overflow-x:auto`（1.8）。
+- **渐变背景**：**文字/卡片背景默认纯色**（官方规范 #4.1.2 明确不建议文字背景用渐变，暗色模式会转纯色）；无文字压着的纯装饰渐变允许（#4.1.3），但按"纯色优先"原则能改则改。旧组件/自定义主题遇到此项按第 5 步处理。
 
 ## Gotchas（真实排版踩过的坑）
 
@@ -145,6 +170,8 @@ description: 微信公众号文章排版引擎，将 Markdown 转换为可直接
 - **代码/Prompt 必须用代码块**：文章里的代码、命令、提示词用通用库代码块组件（1a/1b），不要塞进普通段落或引用块，否则缩进和等宽会丢失。
 - **代码块要紧凑、忌大空白**：用通用库 1a/1b 的"每行一个 `<p style=\"margin:0\">`"写法，**绝不用 `white-space:pre`**——它会把 HTML 源码里 span 前的缩进和行间换行原样渲染成大左缩进 + 空行；缩进只用全角空格 `　`，行距靠 `line-height:1.6`。
 - **待补素材居中**：`【插入…】`、待录屏 / GIF / 视频 / 成果图等占位，用通用库 **2c 居中素材占位板块**（浅底柔虚线框 + 居中图标与说明），不要用左对齐的提示块。
+- **图片用 base64 内嵌**：交付前有图就跑 `inline_images.py`，产物是单文件、整份复制到后台不依赖图床。代价是体积 +33%——单图压到 300KB~1MB、总量 ≤ 8MB，否则公众号编辑器粘贴会卡；webp/svg 后台支持不稳定，先转 png/jpg。若粘贴后草稿能看、发布后裂图（说明后台没把 data URI 转存素材库），回退用干净正文里的外链版，或在编辑器里手动重传。
+- **img 的 src 可直接写 `data:`**：组件里的 `{{图片URL}}` 不用改，脚本会跳过已内嵌的图。
 
 ## 自定义主题生成（第二条工作流）
 

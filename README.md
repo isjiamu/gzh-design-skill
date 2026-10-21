@@ -131,11 +131,37 @@ git clone https://github.com/isjiamu/gzh-design-skill.git ~/.claude/skills/gzh-d
 3. **解析 Markdown** — 识别标题、章节、加粗、高亮、引用、图片、代码块、列表。
 4. **装配 HTML** — 用组件库里的真实组件拼装，落实编号、下划线、全角、签名。
 5. **校验** — 跑 `validate_gzh_html.py`，ERROR 清零才交付。
-6. **输出** — 生成干净正文 + 带「复制」按钮的预览页；浏览器打开预览页点右上角「复制到公众号」，再去编辑器粘贴即可（免手动全选）。
+6. **图片内嵌** — 有图片时跑 `inline_images.py` 把图转成 base64，HTML 变成单文件，整份复制到后台不再依赖图床。
+7. **输出** — 生成干净正文 + 内嵌版 + 带「复制」按钮的预览页；浏览器打开预览页点右上角「复制到公众号」，再去编辑器粘贴即可（免手动全选）。
 
 ## 🧩 公众号平台限制（已内置兜底）
 
-生成的 HTML 严格遵守：禁 `<style>/<script>/<div>`、`class/id`、`position:fixed/absolute/sticky`、`float`、`@media/@keyframes`、`display:grid`、CSS 变量、外部字体；样式全部内联；所有文字用 `<span leaf="">` 包裹。这些由校验脚本确定性检查，而非靠模型自觉。
+生成的 HTML 严格遵守[官方《微信公众平台编辑器插件开发规范》](https://developers.weixin.qq.com/doc/service/guide/product/plugin_spec.html)：
+
+- **标签/属性**：禁 `<style>/<script>/<div>`、`class/id`、`position:fixed/absolute/sticky`、`float`、`@media/@keyframes`、`display:grid`、CSS 变量、外部字体、`!important`；样式全部内联。
+- **节点结构**：所有文字用 `<span leaf="">` 包裹；`span[leaf]` 内不出现块级元素（`section/p/div`）。
+- **字体**：不写 `font-family`，一律 `inherit` 走平台默认字体栈（自定义字体在 iOS/安卓渲染不一致）。
+- **CSS 属性**：`height:0` 不包文字、`line-height` 不小于字号、定宽容器不包文字、`text-align` 不用 `start/end`、`img` 的 `opacity` 不为 0。
+- **暗色模式**：文字/卡片背景用纯色，文字压在渐变上会被暗色模式转成纯色。
+
+这些由校验脚本确定性检查，而非靠模型自觉。需要官方实测时，可再跑 [wechatjs/verify-article-structure-spec](https://github.com/wechatjs/verify-article-structure-spec) 的 CLI（真实浏览器量布局），详见 `SKILL.md` 第 5 步。
+
+## 🖼 图片内嵌（base64，单文件交付）
+
+外链图床会防盗链、会过期，本地路径换台机器就打不开。`scripts/inline_images.py` 把 `<img>` 全部换成 base64：
+
+```bash
+python3 scripts/inline_images.py 文章_排版_摸鱼绿(moyu-green).html
+# → 文章_排版_摸鱼绿(moyu-green)_内嵌.html
+```
+
+- **默认只保留微信 CDN（`mmbiz.qpic.cn`）的链接**，本地图片与其它外链一律内嵌：外链在这边能下载 ≠ 微信粘贴时能取到，base64 才稳
+- 图床稳定想保留原链接用 `--keep-remote`（全部远程）或 `--keep-host <域名>`；要完全离线的单文件用 `--inline-all`
+- 支持 http(s) 下载、本地文件、已是 `data:` 的跳过；按文件头识别 png/jpeg/gif/webp/bmp，注释里的示例不动
+- **本地图片路径**依次找「HTML 目录 → 当前目录 → 各上两级 → `--source-dir`」，再按文件名唯一定位；docx 解包出的 `images/` 在 md 旁边时加 `--source-dir <md 目录>` 即可
+- `--check` 只体检不写文件；占位图（`{{图片URL}}`）会单独计数提醒补图
+- 单图默认上限 3MB，失败/超限的图保留原 `src` 并在输出里标 ✗，不会让整篇排版报废
+- 代价是体积 +33%：单图压到 300KB~1MB、总量 ≤ 8MB，否则公众号编辑器粘贴会卡；webp/svg 后台支持不稳定，先转 png/jpg
 
 ## 🔁 可验证循环
 
@@ -146,8 +172,8 @@ python3 scripts/component_lint.py .            # 源头关：扫组件库反模�
 python3 scripts/validate_gzh_html.py out.html  # 产物关：扫最终 HTML 合规
 ```
 
-- **源头关** 查 `white-space:pre`（大空白）、正文四周虚线框、平台禁用项 —— 须 0 ERROR。
-- **产物关** 查禁用标签、`<span leaf>` 包裹、半角标点 —— 须 0 ERROR / 半角 0 WARN。
+- **源头关** 查 `white-space:pre`（大空白）、正文四周虚线框、平台禁用项、自定义 font-family、`!important`、`<pre>` —— 须 0 ERROR。
+- **产物关** 查禁用标签、`<span leaf>` 包裹、官方规范 #1/#2/#3 的 CSS 与结构红线、半角标点 —— 须 0 ERROR / 半角 0 WARN。
 - 逻辑：源头干净 → 产物必然干净。详见 `references/eval-cases.md`。
 
 ## 💡 为什么这么设计

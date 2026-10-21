@@ -33,7 +33,19 @@ CHECKS = [
     (re.compile(r"display\s*:\s*grid", re.I), "ERROR", "display:grid 不被支持"),
     (re.compile(r"var\s*\(\s*--", re.I), "ERROR", "用了 CSS 变量 var(--x)"),
     (re.compile(r"@(media|keyframes|import)", re.I), "ERROR", "@media/@keyframes/@import 不被支持"),
+    (re.compile(r"!important", re.I), "ERROR",
+     "用了 !important：平台不建议（官方规范 #4.5.2），会压掉平台公共样式与暗色模式覆盖"),
+    (re.compile(r"<pre[\s>]", re.I), "ERROR",
+     "用了 <pre>：普通正文不要 pre（官方规范 #1.8）；代码块请用 common-components 的"
+     "「每行一个 <p style=\"margin:0\">」写法"),
 ]
+
+# 官方规范 #3：不要设置自定义字体族（代码等宽字体可例外）
+FONT_DECL = re.compile(r"font-family\s*:\s*([^;\"']*(?:'[^']*'[^;\"']*)*)", re.I)
+FONT_OK = re.compile(r"^\s*(?:inherit|unset|initial|revert)\s*$", re.I)
+FONT_OFFICIAL = re.compile(
+    r'^\s*"?mp-quote"?,?\s*PingFang\s*SC,?\s*system-ui,?\s*-apple-system', re.I)
+FONT_MONO = re.compile(r"monospace|courier|consolas|menlo|monaco|sf\s*mono", re.I)
 
 # 四周虚线框：border: ... dashed（不含方向，如 border-left dashed 不算）
 FOURSIDE_DASHED = re.compile(r"border\s*:\s*[^;{}]*dashed", re.I)
@@ -60,6 +72,12 @@ def lint_file(path):
         if FOURSIDE_DASHED.search(html) and not CENTERED.search(html):
             add("WARN", "四周虚线框 border:…dashed（正文强调请用左竖条；"
                         "仅居中的素材占位块可用 dashed）")
+        # 字体：主题/组件一律 inherit 或官方默认栈（等宽代码字体例外）
+        for m in FONT_DECL.finditer(html):
+            val = m.group(1).strip()
+            if FONT_OK.match(val) or FONT_OFFICIAL.match(val) or FONT_MONO.search(val):
+                continue
+            add("ERROR", f"自定义 font-family「{val}」：官方规范 #3 不建议设置字体族，改 inherit")
     return name, found
 
 

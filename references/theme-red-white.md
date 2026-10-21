@@ -37,14 +37,14 @@
 内容区边距：   0 10px（左右各 10px）
 ```
 
-字体栈：`-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif`
+字体：不设 `font-family`，一律 `inherit` 走平台默认字体栈（官方规范 #3）
 
 ---
 
 ## 组件 1 全局容器
 
 ```html
-<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#374151;line-height:1.75;letter-spacing:0.5px;overflow-x:hidden;">
+<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:inherit;color:#374151;line-height:1.75;letter-spacing:0.5px;overflow-x:hidden;">
 
   <!-- 所有组件放在这里 -->
 
@@ -112,7 +112,7 @@
 
 ```html
 <section style="padding:0 10px;">
-  <section style="height:1px;background:linear-gradient(to right,transparent,#FCA5A5,#DC2626,#FCA5A5,transparent);margin:0;">
+  <section style="height:1px;background:#FCA5A5;margin:0;">
     <span leaf=""><br></span>
   </section>
 </section>
@@ -504,9 +504,9 @@
 <section style="padding:0 10px;">
   <section style="text-align:center;margin:0 0 32px;">
     <section style="display:flex;align-items:center;justify-content:center;">
-      <span style="height:2px;width:60px;background:linear-gradient(to right,transparent,#DC2626);margin-right:12px;"><span leaf=""><br></span></span>
+      <span style="height:2px;width:60px;background:#FCA5A5;margin-right:12px;"><span leaf=""><br></span></span>
       <span style="font-size:11px;color:#DC2626;letter-spacing:3px;font-weight:700;"><span leaf="">END</span></span>
-      <span style="height:2px;width:60px;background:linear-gradient(to left,transparent,#DC2626);margin-left:12px;"><span leaf=""><br></span></span>
+      <span style="height:2px;width:60px;background:#FCA5A5;margin-left:12px;"><span leaf=""><br></span></span>
     </section>
   </section>
 </section>
@@ -539,7 +539,7 @@
 ## 完整文章模板骨架
 
 ```html
-<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#374151;line-height:1.75;letter-spacing:0.5px;overflow-x:hidden;">
+<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:inherit;color:#374151;line-height:1.75;letter-spacing:0.5px;overflow-x:hidden;">
 
   <!-- 1. 开头引言卡片（组件2，白底红色光晕） -->
 

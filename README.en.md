@@ -117,11 +117,25 @@ Scan to join the **official WeChat Work group** (dynamic QR, auto-invite) — ch
 3. **Parse Markdown** — headings, chapters, bold, highlight, quotes, images, code, lists.
 4. **Assemble HTML** — from real components; apply numbering, underlines, full-width punctuation, signature.
 5. **Validate** — run `validate_gzh_html.py`, ship only at 0 ERROR.
-6. **Output** — a clean fragment + a preview page with a **Copy** button; open it, click "Copy to WeChat", then paste into the editor (no manual select-all).
+6. **Inline images** — run `inline_images.py` to turn images into base64, so the HTML is a single self-contained file that copies into WeChat without depending on any image host.
+7. **Output** — a clean fragment, an inlined copy, and a preview page with a **Copy** button; open it, click "Copy to WeChat", then paste into the editor (no manual select-all).
 
 ## 🧩 Platform limits (enforced)
 
-Output obeys: no `<style>/<script>/<div>`, no `class/id`, no `position:fixed/absolute/sticky`, `float`, `@media/@keyframes`, `display:grid`, CSS variables, external fonts; all styles inlined; every text node wrapped in `<span leaf="">`. Checked deterministically by scripts, not by model discipline.
+Output obeys the official [WeChat public-platform editor plugin spec](https://developers.weixin.qq.com/doc/service/guide/product/plugin_spec.html): no `<style>/<script>/<div>`, no `class/id`, no `position:fixed/absolute/sticky`, `float`, `@media/@keyframes`, `display:grid`, CSS variables, external fonts, `!important`; all styles inlined; every text node wrapped in `<span leaf="">`; no block-level element inside `span[leaf]`; no `font-family` (always `inherit` — custom fonts render inconsistently on iOS/Android); no text inside `height:0`, no `line-height` below the font size, no fixed-px text containers, no `text-align: start/end`, no `opacity:0` images. Checked deterministically by scripts, not by model discipline.
+
+## 🖼 Inlined images (base64, single-file delivery)
+
+Image hosts block hotlinking and links expire. `scripts/inline_images.py` rewrites every `<img>` to a base64 data URI:
+
+```bash
+python3 scripts/inline_images.py article_layout_moyu-green.html
+# → article_layout_moyu-green_内嵌.html
+```
+
+- Handles http(s) downloads, local paths, skips existing `data:` URIs; detects png/jpeg/gif/webp/bmp by magic bytes; ignores examples inside HTML comments
+- Default per-image limit 3MB; failed/oversized images keep their original `src` and are marked ✗ instead of breaking the whole layout
+- Costs +33% size: keep each image 300KB-1MB and the total under 8MB, or the WeChat editor will choke on paste; webp/svg are poorly supported by WeChat — convert to png/jpg first
 
 ## 🔁 Verifiable loop
 
@@ -130,7 +144,7 @@ python3 scripts/component_lint.py .            # source gate: anti-patterns in l
 python3 scripts/validate_gzh_html.py out.html  # output gate: final HTML compliance
 ```
 
-Source gate flags `white-space:pre` (blank bloat), full-border dashed frames in prose, and forbidden platform items — must be 0 ERROR. Output gate flags forbidden tags, `<span leaf>` wrapping, half-width punctuation — must be 0 ERROR / 0 half-width WARN.
+Source gate flags `white-space:pre` (blank bloat), full-border dashed frames in prose, forbidden platform items, custom `font-family`, `!important`, `<pre>` — must be 0 ERROR. Output gate flags forbidden tags, `<span leaf>` wrapping, spec CSS/structure rules, half-width punctuation — must be 0 ERROR / 0 half-width WARN.
 
 ## 💡 Why it's built this way
 

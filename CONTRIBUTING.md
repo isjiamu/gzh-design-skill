@@ -30,7 +30,8 @@ python3 scripts/validate_gzh_html.py <生成的.html>
 ## 新增一套主题风格
 
 1. 照 `references/theme-red-white.md` 的结构，新建一份 `references/theme-{你的英文标识}.md`（如 `theme-ocean-breeze.md`；内含设计变量 + 各组件 HTML + 模板骨架 + 映射规则，标题里的风格显示名可用中文）。
-2. 硬性约束：所有样式内联、文字用 `<span leaf="">` 包裹、禁 `div/class/id/style/grid/position/var/@media`、正文强调用左竖条或小标签而**非四周虚线框**、代码块用「每行一个 `<p>`」而**非 `white-space:pre`**。
+2. 硬性约束：所有样式内联、文字用 `<span leaf="">` 包裹、禁 `div/class/id/style/grid/position/var/@media`、**不写 `font-family`（一律 `inherit`）**、**不用 `!important`**、正文强调用左竖条或小标签而**非四周虚线框**、代码块用「每行一个 `<p>`」而**非 `white-space:pre`**、`span[leaf]` 内不放块级元素。
+   以上对应官方[《微信公众平台编辑器插件开发规范》](https://developers.weixin.qq.com/doc/service/guide/product/plugin_spec.html)，`validate_gzh_html.py` 会确定性检查。
 3. 在 `references/theme-index.md` 登记（主色 + 适用场景 + 组件库文件 + 正文下划线 CSS）。
 4. 跑可验证循环，两关全绿。
 5. 提 PR，附上用 `assets/sample-article.md` 生成的预览 HTML。

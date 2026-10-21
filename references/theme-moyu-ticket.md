@@ -39,14 +39,14 @@
 章节间距：       margin-bottom: 32px
 ```
 
-字体栈：`-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif`
+字体：不设 `font-family`，一律 `inherit` 走平台默认字体栈（官方规范 #3）
 
 ---
 
 ## 组件 1 全局容器
 
 ```html
-<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#374151;line-height:1.75;letter-spacing:0.5px;">
+<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:inherit;color:#374151;line-height:1.75;letter-spacing:0.5px;">
 
   <!-- 所有组件放在这里 -->
 
@@ -412,7 +412,7 @@
 ## 完整文章模板骨架
 
 ```html
-<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#374151;line-height:1.75;letter-spacing:0.5px;">
+<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:inherit;color:#374151;line-height:1.75;letter-spacing:0.5px;">
 
   <!-- 1. 票据封面（组件2 ticket-cover） -->
 

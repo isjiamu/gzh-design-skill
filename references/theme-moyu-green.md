@@ -47,14 +47,14 @@
 内容区边距：   0 20px（模块左右各 20px）
 ```
 
-字体栈：`-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif`
+字体：不设 `font-family`，一律 `inherit` 走平台默认字体栈（官方规范 #3）
 
 ---
 
 ## 组件 1 全局容器
 
 ```html
-<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#374151;line-height:1.75;letter-spacing:0.5px;overflow-x:hidden;">
+<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:inherit;color:#374151;line-height:1.75;letter-spacing:0.5px;overflow-x:hidden;">
 
   <!-- 所有组件放在这里 -->
 
@@ -79,7 +79,7 @@
     <section style="display:flex;align-items:center;gap:8px;margin-bottom:28px;">
       <span style="width:6px;height:6px;background:#059669;border-radius:50%;"><span leaf=""><br></span></span>
       <span style="font-size:11px;font-weight:700;letter-spacing:3px;color:#059669;"><span leaf="">{{顶部标签}}</span></span>
-      <section style="flex:1;height:1px;overflow:hidden;background:linear-gradient(to right,rgba(5,150,105,0.12),transparent);"><span leaf=""><br></span></section>
+      <section style="flex:1;height:1px;overflow:hidden;background:#E7F3EE;"><span leaf=""><br></span></section>
       <span style="font-size:10px;color:#D1D5DB;font-weight:600;"><span leaf="">{{日期}}</span></span>
     </section>
     <section style="display:flex;align-items:center;gap:20px;">
@@ -94,7 +94,7 @@
         <p style="font-size:24px;font-weight:900;color:#059669;margin:0 0 16px;line-height:1.05;letter-spacing:-2px;">
           <span leaf="">{{主标题行2}}</span>
         </p>
-        <section style="width:48px;height:3px;background:linear-gradient(to right,#059669,#34D399);border-radius:2px;margin-bottom:12px;">
+        <section style="width:48px;height:3px;background:#059669;border-radius:2px;margin-bottom:12px;">
           <span leaf=""><br></span>
         </section>
         <p style="font-size:13px;color:#9CA3AF;margin:0;line-height:1.7;letter-spacing:0.5px;">
@@ -126,7 +126,7 @@
     <section style="display:flex;align-items:center;gap:8px;margin-bottom:28px;">
       <span style="width:6px;height:6px;background:#059669;border-radius:50%;"><span leaf=""><br></span></span>
       <span style="font-size:11px;font-weight:700;letter-spacing:3px;color:#059669;"><span leaf="">{{顶部标签}}</span></span>
-      <section style="flex:1;height:1px;overflow:hidden;background:linear-gradient(to right,rgba(5,150,105,0.12),transparent);"><span leaf=""><br></span></section>
+      <section style="flex:1;height:1px;overflow:hidden;background:#E7F3EE;"><span leaf=""><br></span></section>
       <span style="font-size:10px;color:#D1D5DB;font-weight:600;"><span leaf="">{{日期}}</span></span>
     </section>
     <section>
@@ -140,7 +140,7 @@
       <p style="font-size:24px;font-weight:900;color:#059669;margin:0 0 16px;line-height:1.05;letter-spacing:-2px;">
         <span leaf="">{{主标题行2}}</span>
       </p>
-      <section style="width:48px;height:3px;background:linear-gradient(to right,#059669,#34D399);border-radius:2px;margin-bottom:12px;">
+      <section style="width:48px;height:3px;background:#059669;border-radius:2px;margin-bottom:12px;">
         <span leaf=""><br></span>
       </section>
       <p style="font-size:13px;color:#9CA3AF;margin:0;line-height:1.7;letter-spacing:0.5px;">
@@ -775,7 +775,7 @@
   <section style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
     <span style="width:8px;height:8px;background:#059669;border-radius:50%;"><span leaf=""><br></span></span>
     <span style="font-size:11px;color:#059669;font-weight:700;letter-spacing:1px;"><span leaf="">VIDEO 01</span></span>
-    <span style="flex:1;height:1px;background:linear-gradient(to right,rgba(5,150,105,0.2),transparent);"><span leaf=""><br></span></span>
+    <span style="flex:1;height:1px;background:#DDF0E8;"><span leaf=""><br></span></span>
     <span style="font-size:11px;color:#9CA3AF;"><span leaf="">{{视频描述}}</span></span>
   </section>
   <section style="border-radius:10px;overflow:hidden;">
@@ -840,7 +840,7 @@
 ## 完整文章模板骨架
 
 ```html
-<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:#374151;line-height:1.75;letter-spacing:0.5px;overflow-x:hidden;">
+<section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:inherit;color:#374151;line-height:1.75;letter-spacing:0.5px;overflow-x:hidden;">
 
   <!-- 1. 封面（组件2 cover-breaking，有图/无图二选一） -->
 
