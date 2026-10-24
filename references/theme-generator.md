@@ -279,6 +279,7 @@
 - 不要使用 `<style>`、`<script>`、`form`、`input`、`button`、`textarea`、`select`、`video`、`audio`、`canvas`、`svg`、`iframe`。
 - 不要使用 JavaScript 事件、动画、悬停态、过渡、滤镜交互、粘性定位、固定定位。
 - 不要使用 CSS Grid、复杂 Flex 布局、`position: sticky`、`position: fixed`、`backdrop-filter`、CSS 变量、伪元素、媒体查询。
+- 粘贴实测确认崩坏（2026-10 公众号编辑器）：`display:flex`+`gap` 行布局、负字距 `letter-spacing:-Npx`、中文 `text-align:justify`、横向滚动容器、`<h4>`~`<h6>`——一律垂直堆叠 + margin，同行小元素用 `display:inline-block`，小标题用带样式的 `p`。
 - 不要把 `table`、`tr`、`td` 用作通用页面布局、分栏布局、按钮编排、卡片宫格或图片区块骨架；它们只应在真实表格语义下出现。
 - 不要依赖 `aspect-ratio`、`object-fit`、`gap`、`z-index`、复杂绝对定位层叠来完成核心布局；这些能力即使出现，也不能成为结构成立的前提。
 - 不要生成任何需要点击后才成立的交互式组件；所有区块都必须是静态内容即可成立。

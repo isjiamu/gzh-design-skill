@@ -10,10 +10,10 @@
 > - ❌ 不支持 `@media` 媒体查询、`@keyframes` 动画
 > - ❌ 不支持 `display: grid`
 > - ✅ 支持内联 `style` 属性
-> - ✅ 支持 `display: flex`（有限支持）
 > - ✅ 支持 `linear-gradient`（可渲染但有暗色模式检测风险，文字背景默认用纯色）
 > - ✅ 支持 `border-radius`、`box-shadow`
 > - ✅ 支持 `<section>`、`<p>`、`<span>`、`<strong>`、`<img>` 等基础标签
+> - ⚠️ **粘贴实测修正（2026-10）**：`display:flex`+`gap`、中文 `justify` 粘贴后崩坏；`<svg>`、`<video>`、`<h4>`~`<h6>` 被静默剥除；图片相对路径 src 粘贴必丢（须公网 http(s) URL）。本库组件尚未全部改写，使用前按 SKILL.md「平台红线」逐项处理（可参照已改写完的摸鱼绿主题库），`component_lint.py` 会逐项检出
 
 ---
 
@@ -308,7 +308,7 @@
 ```html
 <section style="margin: 0 16px 10px;border: 1px solid #E8E8E8;">
   <section style="margin: 0;overflow: hidden;">
-    <span leaf=""><img src="图片URL" style="max-width: 100%;display: block;"></span>
+    <span leaf=""><img src="{{图片URL}}" style="max-width: 100%;display: block;"></span>
   </section>
 </section>
 ```
@@ -318,7 +318,7 @@
 ```html
 <section style="margin: 0 16px 8px;border: 1px solid #E8E8E8;">
   <section style="margin: 0;overflow: hidden;">
-    <span leaf=""><img src="图片URL" style="max-width: 100%;display: block;"></span>
+    <span leaf=""><img src="{{图片URL}}" style="max-width: 100%;display: block;"></span>
   </section>
 </section>
 <p style="font-size: 12px;color: #A3A3A3;text-align: center;margin: 8px 16px 32px;letter-spacing: 0.5px;">

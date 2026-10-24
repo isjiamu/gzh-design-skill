@@ -35,6 +35,25 @@ FORBIDDEN = [
     (re.compile(r"var\s*\(\s*--", re.I), "ERROR", "CSS 变量 var(--x) 不被支持，请写死值"),
     (re.compile(r"url\s*\(\s*['\"]?https?://[^)]*\.(woff2?|ttf|otf|eot)", re.I),
      "ERROR", "外部字体不被支持"),
+    # ---- 2026-10 公众号编辑器粘贴实测确认会被剥除/崩坏的写法 ----
+    (re.compile(r"<svg[\s>]", re.I), "ERROR",
+     "<svg> 粘贴后会被静默剥掉，图标改用 Emoji 或文字"),
+    (re.compile(r"<video[\s>]", re.I), "ERROR",
+     "视频无法随粘贴带入编辑器，改用占位组件并提示手动插入"),
+    (re.compile(r"</?h[456][\s>]", re.I), "ERROR",
+     "<h4>~<h6> 粘贴后样式丢失，小标题用带样式的 <p>"),
+    (re.compile(r"<img[^>]+src\s*=\s*[\"'](?!https?://)[^\"']*[\"']", re.I), "ERROR",
+     "图片 src 是相对/本地路径，粘贴时会被静默剥掉，必须是公网 http(s) URL（推荐素材库 mmbiz.qpic.cn 地址）"),
+    (re.compile(r"display\s*:\s*flex", re.I), "WARNING",
+     "flex 布局在粘贴管线中不可靠（gap 必丢、整行挤压变形），建议改垂直堆叠或 inline-block+margin"),
+    (re.compile(r"(?<![\w-])gap\s*:", re.I), "WARNING",
+     "gap 属性粘贴时被丢弃，间距改用 margin"),
+    (re.compile(r"letter-spacing\s*:\s*-", re.I), "WARNING",
+     "负字距被规范化，大标题会变形，去掉负值"),
+    (re.compile(r"text-align\s*:\s*justify", re.I), "WARNING",
+     "中文 justify 粘贴后字距被拉花，用默认左对齐"),
+    (re.compile(r"overflow(?:-x)?\s*:\s*(?:scroll|auto)", re.I), "WARNING",
+     "滚动容器在公众号内不可用，内容改垂直堆叠展示"),
 ]
 
 CJK = re.compile(r"[一-鿿㐀-䶿]")

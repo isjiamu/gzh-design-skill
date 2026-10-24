@@ -4,7 +4,7 @@
 >
 > **配色占位**：下面用红白色系（主色 `#DC2626`、浅底 `#FEF2F2`、浅标 `#FEE2E2`、深字 `#991B1B`）做示例。换其它主题时，把这几个值替换为该主题"设计变量速查表"里的对应色；代码块深色版各主题可共用，浅色版用主题主色做左竖条。
 >
-> **平台限制**：同主题库——禁 `<style>/<script>/class/id/div/position/float/@media/grid`，只用内联 + `flex`，文字全部 `<span leaf="">` 包裹。
+> **平台限制**：同主题库——禁 `<style>/<script>/class/id/div/position/float/@media/grid/svg/video/h4-h6`，只用内联样式，文字全部 `<span leaf="">` 包裹。**粘贴实测补充（2026-10）**：`display:flex`+`gap`、负字距、横滚容器、中文 `justify` 粘贴后崩坏，布局用垂直堆叠 + margin / inline-block；图片 src 必须是公网 http(s) URL，相对路径粘贴时被静默剥掉。
 
 ---
 
@@ -16,10 +16,10 @@
 
 ```html
 <section style="margin:0 0 20px;border-radius:8px;overflow:hidden;background:#1E293B;box-shadow:0 4px 16px -8px rgba(15,23,42,0.4);">
-  <section style="display:flex;align-items:center;padding:9px 14px;background:#0F172A;">
-    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#FF5F56;margin-right:7px;font-size:0;line-height:0;overflow:hidden;">.</span>
-    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#FFBD2E;margin-right:7px;font-size:0;line-height:0;overflow:hidden;">.</span>
-    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#27C93F;font-size:0;line-height:0;overflow:hidden;">.</span>
+  <section style="padding:9px 14px;background:#0F172A;">
+    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#FF5F56;margin-right:7px;font-size:0;line-height:0;overflow:hidden;vertical-align:middle;">.</span>
+    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#FFBD2E;margin-right:7px;font-size:0;line-height:0;overflow:hidden;vertical-align:middle;">.</span>
+    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#27C93F;font-size:0;line-height:0;overflow:hidden;vertical-align:middle;">.</span>
     <span style="margin-left:12px;font-size:12px;color:#64748B;font-family:Consolas,Monaco,monospace;letter-spacing:1px;"><span leaf="">python</span></span>
   </section>
   <section style="padding:11px 14px;">
@@ -59,14 +59,14 @@
 
 ## 二、图片 / GIF 组件（Markdown `![](...)` → 这里）
 
-文章里**每一处图片、GIF、截图占位都要保留并转成下面的组件**，不得遗漏；`src` 原样保留用户给的 URL 或相对路径。GIF 动图与普通图片都用 `<img>`（公众号原生支持 GIF 自动播放），区别只在加不加"动图"角标说明。
+文章里**每一处图片、GIF、截图占位都要保留并转成下面的组件**，不得遗漏。**`src` 必须是公网 http(s) URL**（相对路径/本地路径粘贴进编辑器时会被静默剥掉，只留下文字）；用户只给了本地图片时保留 `{{图片URL}}` 占位，并在交付时提醒用户先补公网地址（或粘贴后到编辑器里手动传图）。GIF 动图与普通图片都用 `<img>`（公众号原生支持 GIF 自动播放），区别只在加不加"动图"角标说明。
 
 ### 2a. 标准图片（带说明）
 
 ```html
 <section style="background:#FFF;border-radius:12px;padding:6px;border:1px solid #E5E7EB;box-shadow:0 4px 12px -2px rgba(0,0,0,0.08);margin-bottom:8px;">
   <section style="margin:0;border-radius:8px;overflow:hidden;">
-    <span leaf=""><img src="图片URL" style="max-width:100%;height:auto;display:block;margin:0 auto;"></span>
+    <span leaf=""><img src="{{图片URL}}" style="max-width:100%;height:auto;display:block;margin:0 auto;"></span>
   </section>
 </section>
 <p style="font-size:12px;color:#9CA3AF;text-align:center;margin:0 0 24px;">
@@ -83,7 +83,7 @@
 ```html
 <section style="background:#FFF;border-radius:12px;padding:6px;border:1px solid #E5E7EB;box-shadow:0 4px 12px -2px rgba(0,0,0,0.08);margin-bottom:8px;">
   <section style="margin:0;border-radius:8px;overflow:hidden;">
-    <span leaf=""><img src="动图URL.gif" style="max-width:100%;height:auto;display:block;margin:0 auto;"></span>
+    <span leaf=""><img src="{{动图URL.gif}}" style="max-width:100%;height:auto;display:block;margin:0 auto;"></span>
   </section>
 </section>
 <p style="text-align:center;margin:0 0 24px;">
@@ -92,7 +92,7 @@
 </p>
 ```
 
-（角标底色 `#FEE2E2` → 主题浅底色，字色 `#991B1B` → 主题深字色，取自该主题"设计变量速查表"；无色块的极简主题改用细线描边胶囊：边框与字色用主题主色、背景透明。）若原文只写了图片但没给 URL，用 `src="图片URL"` 占位并在交付时提醒用户补图，**不要凭空编造图床链接**。
+（角标底色 `#FEE2E2` → 主题浅底色，字色 `#991B1B` → 主题深字色，取自该主题"设计变量速查表"；无色块的极简主题改用细线描边胶囊：边框与字色用主题主色、背景透明。）若原文只写了图片但没给 URL，保留 `{{图片URL}}` 占位并在交付时提醒用户补**公网 http(s) 地址**（相对路径粘贴必丢），**不要凭空编造图床链接**。
 
 ---
 

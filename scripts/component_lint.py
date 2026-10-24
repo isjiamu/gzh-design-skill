@@ -33,6 +33,24 @@ CHECKS = [
     (re.compile(r"display\s*:\s*grid", re.I), "ERROR", "display:grid 不被支持"),
     (re.compile(r"var\s*\(\s*--", re.I), "ERROR", "用了 CSS 变量 var(--x)"),
     (re.compile(r"@(media|keyframes|import)", re.I), "ERROR", "@media/@keyframes/@import 不被支持"),
+    # ---- 2026-10 公众号编辑器粘贴实测崩坏项（详见 SKILL.md 平台红线） ----
+    (re.compile(r"<svg[\s>]", re.I), "ERROR",
+     "<svg> 粘贴后被静默剥掉，图标改 Emoji/文字"),
+    (re.compile(r"<video[\s>]", re.I), "ERROR",
+     "视频无法粘贴带入，用占位框提示编辑器手动插入"),
+    (re.compile(r"</?h[456][\s>]", re.I), "ERROR",
+     "<h4>~<h6> 粘贴后样式丢失，小标题用带样式的 <p>"),
+    (re.compile(r"<img[^>]+src\s*=\s*[\"'](?!https?://|\{\{)[^\"']*[\"']", re.I), "ERROR",
+     "组件写死相对/本地图片地址，粘贴必丢——改 {{占位}} 并在实例化时填公网 URL"),
+    (re.compile(r"display\s*:\s*flex", re.I), "WARN",
+     "flex 布局粘贴不可靠（gap 必丢），建议垂直堆叠或 inline-block+margin"),
+    (re.compile(r"(?<![\w-])gap\s*:", re.I), "WARN", "gap 粘贴时被丢弃，间距改 margin"),
+    (re.compile(r"letter-spacing\s*:\s*-", re.I), "WARN", "负字距被规范化，去掉负值"),
+    (re.compile(r"text-align\s*:\s*justify", re.I), "WARN", "中文 justify 粘贴后字距拉花，用左对齐"),
+    (re.compile(r"overflow(?:-x)?\s*:\s*(?:scroll|auto)", re.I), "WARN",
+     "滚动容器在公众号内不可用，改垂直堆叠"),
+    (re.compile(r"<img[^>]+src\s*=\s*[\"']\{\{", re.I), "WARN",
+     "图片 src 是占位符：实例化时必须填公网 http(s) URL，否则粘贴后图片静默消失"),
 ]
 
 # 四周虚线框：border: ... dashed（不含方向，如 border-left dashed 不算）

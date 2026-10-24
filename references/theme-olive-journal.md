@@ -6,13 +6,14 @@
 >
 > **公众号平台限制须知**：
 > - ❌ 不支持 `<style>`/`<script>`、CSS class/id、`position:fixed/absolute`、`float`、`@media`/`@keyframes`、`display:grid`
-> - ✅ 支持内联 `style`、`display:flex`（含 `gap`）、`box-shadow`、`border-radius`、`<svg>`（流程图/图标，微信支持）、`<section>/<p>/<span>/<strong>/<img>/<h3>/<h4>/<figure>/<figcaption>/<hr>/<ul>/<li>` 等基础标签
+> - ✅ 支持内联 `style`、`box-shadow`、`border-radius`、`<section>/<p>/<span>/<strong>/<img>/<h3>/<hr>/<ul>/<li>` 等基础标签
+> - ⚠️ **粘贴实测修正（2026-10）**：`display:flex`（含 `gap`）、负字距、中文 `justify` 粘贴后崩坏；`<svg>`（含本库流程图/图标）、`<video>`、`<h4>`~`<h6>`、`<figure>/<figcaption>` 会被静默剥除——"SVG 微信支持、原子渲染不受重排影响"的旧结论不成立，图标与流程图须改 Emoji/文字 + 竖排块；图片相对路径 src 粘贴必丢（须公网 http(s) URL）。本库组件尚未全部改写，使用前按 SKILL.md「平台红线」逐项处理（可参照已改写完的摸鱼绿主题库），`component_lint.py` 会逐项检出
 >
 > **WeChat 兼容铁律**（本主题组件全部已按此写好，改动时必须遵守）：
 > - 原始设计稿里出现的 `id="block-*"`、`class="..."`、`display:grid` 均已在下方组件中清除/替换为 `display:flex`，新增组件时同样不能带这三样
 > - 行内代码一律用 `<span>` 模拟（不用 `<code>` 标签），风格与通用库 1c 保持同源
 > - 图片一律只保留 `src`/`alt`/`style`，不要带 `class`/`data-ratio`/`data-w`/`data-imgqrcoded` 等编辑器内部属性
-> - 流程示意图（组件 23）内文字用 SVG `<tspan leaf="">` 而非 `<span leaf="">`——SVG 是原子渲染，不受微信富文本重排影响，校验脚本可能仍会把这几处计入"未包裹"warning，属已知误报，可忽略
+> - ~~流程示意图（组件 23）用 SVG~~ **已证伪（2026-10 实测）**：`<svg>` 粘贴进编辑器后整块被静默剥除，"原子渲染不受重排影响"不成立。组件 23 需改写为文字/Emoji + 竖排块后再用；在那之前不要用 SVG 流程图
 
 ---
 

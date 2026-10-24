@@ -6,7 +6,8 @@
 >
 > **公众号平台限制须知**：
 > - ❌ 不支持 `<style>`/`<script>`、CSS class/id、`position:fixed/absolute`、`float`、`@media`/`@keyframes`、`display:grid`
-> - ✅ 支持内联 `style`、`display:flex`（有限）、`box-shadow`（含硬阴影偏移）、`border-radius`、`text-shadow`、`<svg>`（结尾互动区图标，微信支持）、`<section>/<p>/<span>/<strong>/<img>` 等基础标签
+> - ✅ 支持内联 `style`、`box-shadow`（含硬阴影偏移）、`border-radius`、`text-shadow`、`<section>/<p>/<span>/<strong>/<img>` 等基础标签
+> - ⚠️ **粘贴实测修正（2026-10）**：`display:flex`+`gap`、中文 `justify` 粘贴后崩坏；`<svg>`（含本库结尾互动区图标）、`<video>`、`<h4>`~`<h6>` 会被静默剥除——"SVG 微信支持"的旧结论不成立，图标须改 Emoji/文字；图片相对路径 src 粘贴必丢（须公网 http(s) URL）。本库组件尚未全部改写，使用前按 SKILL.md「平台红线」逐项处理（可参照已改写完的摸鱼绿主题库），`component_lint.py` 会逐项检出
 >
 > **WeChat 兼容铁律**（本主题组件全部已按此写好，改动时必须遵守）：
 > - 所有"装饰性空元素"（撕票虚线、头像占位框）**没有真实内容时整块删掉**，不留空 section

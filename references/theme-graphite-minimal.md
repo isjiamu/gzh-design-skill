@@ -6,7 +6,8 @@
 >
 > **公众号平台限制须知**：
 > - ❌ 不支持 `<style>`/`<script>`、CSS class/id/`<div>`、`position:fixed/absolute/sticky`、`float`、`@media`/`@keyframes`、`display:grid`、CSS 变量 `var(--x)`
-> - ✅ 支持内联 `style`、`display:flex`（有限）、`linear-gradient`（可渲染但有暗色模式检测风险，文字背景默认用纯色）、`border-radius`、`box-shadow`、`position:relative`、`<section>/<p>/<span>/<strong>/<img>` 等基础标签
+> - ✅ 支持内联 `style`、`linear-gradient`（可渲染但有暗色模式检测风险，文字背景默认用纯色）、`border-radius`、`box-shadow`、`position:relative`、`<section>/<p>/<span>/<strong>/<img>` 等基础标签
+> - ⚠️ **粘贴实测修正（2026-10）**：`display:flex`+`gap`、负字距、中文 `justify`、横滚容器粘贴后崩坏；`<svg>`、`<video>`、`<h4>`~`<h6>` 被静默剥除；图片相对路径 src 粘贴必丢（须公网 http(s) URL）。本库组件尚未全部改写，使用前按 SKILL.md「平台红线」逐项处理（可参照已改写完的摸鱼绿主题库），`component_lint.py` 会逐项检出
 > - font-size ≤ 24px；正文强调用左竖条/石墨下划线/小标签，**不用四周虚线框**（dashed）
 >
 > **WeChat 兼容铁律**（本主题组件全部已按此写好，改动时必须遵守）：
