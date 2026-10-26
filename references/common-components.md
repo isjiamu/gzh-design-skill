@@ -1,6 +1,6 @@
-# 通用增量组件库 —— 代码块 · 图片/GIF · 小标签标题
+# 通用增量组件库 —— 代码块 · 图片/GIF · 小标签标题 · 脚注/参考资料
 
-> **跨所有主题通用**。主题专属组件（引言卡、章节标题、签名等）读各自主题库；本文件提供三类**所有主题都需要**的组件：代码块、图片/GIF、小标签标题。
+> **跨所有主题通用**。主题专属组件（引言卡、章节标题、签名等）读各自主题库；本文件提供四类**所有主题都需要**的组件：代码块、图片/GIF、小标签标题、脚注/参考资料。
 >
 > **配色占位**：下面用红白色系（主色 `#DC2626`、浅底 `#FEF2F2`、浅标 `#FEE2E2`、深字 `#991B1B`）做示例。换其它主题时，把这几个值替换为该主题"设计变量速查表"里的对应色；代码块深色版各主题可共用，浅色版用主题主色做左竖条。
 >
@@ -178,6 +178,52 @@
 
 ---
 
+## 四、脚注 / 参考资料组件（Markdown `[text](url)` 超链接 → 这里）
+
+> **触发**：正文里出现的 Markdown 超链接 `[text](url)`（图片链接 `![alt](url)` 走组件 2，不算；代码块围栏内的链接原样保留，不动）。公众号正文外链不可点击（见各主题"平台限制"），所以把超链接统一转成"正文 text + 上标编号 + 文末参考资料列表"的学术脚注形式，URL 作纯文本展示，**不要留可点击的 `<a>`**。
+>
+> **编号规则**：按链接在正文中**首次出现的顺序**递增编号 `[1] [2] …`；相同的 `(text,url)` 对复用同一编号（重复出现只标同一 `[n]`，不另起号）。
+>
+> **锚文本为空时**：`[](url)` 无锚文本，用 title 属性值；title 也空则用 URL 的域名作标签。
+>
+> **换色规则**（示例为红白色值，按所选主题"设计变量速查表"替换）：4a 上标 `#DC2626` → 主题主色；4b 标题左竖条 `#DC2626` → 主题主色、分隔线 `#FEE2E2` → 主题浅标色、编号 `#DC2626` → 主题主色、URL muted 色 `#9CA3AF` → 主题中性灰。
+> - **无色块极简主题**（留白禅意/石墨极简等）：4a 去掉 `font-weight:700` 改 `font-weight:500`、颜色用主题主色；4b 标题改用该主题自有小标题组件（如细竖条版），去底色只留分隔线 + 大留白。
+
+### 4a. 上标引用角标（inline，替换 `[text](url)` 里的链接部分）
+
+正文里把 `[尤金·罗沙尔](url)` 替换为「尤金·罗沙尔 + 上标 `[1]`」：
+
+```html
+<span leaf="">尤金·罗沙尔</span><span leaf=""><sup style="font-size:0.62em;color:#DC2626;font-weight:700;vertical-align:super;line-height:0;margin-left:1px;"><span leaf="">[1]</span></sup></span>
+```
+
+- 编号 `[1]` 不可点击，仅作标记；`font-size:0.62em` 相对正文字号，`vertical-align:super` 上标。
+- 与前面文字之间不加空格（紧贴锚文本），`margin-left:1px` 仅微调光学间距。
+- `line-height:0` 防止上标撑高整行行距。
+
+### 4b. 参考资料列表（文末区块，置于作者签名之前）
+
+```html
+<section style="margin:32px 0 0;padding:18px 10px 24px;border-top:1px solid #FEE2E2;">
+  <p style="font-size:15px;font-weight:800;color:#1C1917;margin:0 0 14px;padding-left:10px;border-left:3px solid #DC2626;line-height:1.4;">
+    <span leaf="">参考资料</span>
+  </p>
+  <p style="font-size:13px;color:#374151;margin:0 0 8px;line-height:1.9;">
+    <span leaf=""><strong style="color:#DC2626;"><span leaf="">[1]</span></strong> 尤金·罗沙尔：<span style="color:#9CA3AF;word-break:break-all;">https://en.wikipedia.org/wiki/Eugene_Roshal</span></span>
+  </p>
+  <p style="font-size:13px;color:#374151;margin:0 0 8px;line-height:1.9;">
+    <span leaf=""><strong style="color:#DC2626;"><span leaf="">[2]</span></strong> 第二条锚文本：<span style="color:#9CA3AF;word-break:break-all;">https://example.com/second</span></span>
+  </p>
+</section>
+```
+
+- 标题用左竖条小标题样式（同 3a 取向）；标题文字默认"参考资料"（原文用了"参考"/"来源"/"引用"等就照原文）。
+- 每条一行 `<p>`（不用 `<ol>`，公众号对列表语义支持不稳）：`[n] 锚文本：URL`，编号主题主色加粗、锚文本正文色、URL muted 色 + `word-break:break-all` 防长链接溢出。
+- **列表顺序与正文上标 `[n]` 一一对应**；正文里复用编号的，列表里只列一次。
+- **位置**：放在正文最后一段之后、作者签名组件之前。文中无任何超链接时，不生成此区块。
+
+---
+
 ## 选用速记
 
 | 文章里出现 | 用哪个组件 |
@@ -189,3 +235,4 @@
 | 想给一段起小标题 / 强调 | 3a 左竖条（首选）/ 3b 药丸 / 3c 序号 |
 | `> 金句` | 3d 金句左竖条块 |
 | 提示 / 注意 / 旁注 | 3e 提示左竖条块（**不要用虚线框**） |
+| 正文 `[text](url)` 超链接 | 4a 上标角标（正文）+ 4b 参考资料列表（文末） |
