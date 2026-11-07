@@ -16,7 +16,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Agents](https://img.shields.io/badge/Claude%20Code%20·%20Codex%20·%20Cursor-supported-8b5cf6.svg)](#-快速开始)
 
-[English](README.en.md) ｜ 中文
+[English](README.en.md) ｜ 中文 ｜ [日本語](README.ja.md)
 
 </div>
 
